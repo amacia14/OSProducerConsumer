@@ -51,10 +51,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wave File\WaveFile.cs" />
     <Compile Include="Tricks.cs" />
-    <Compile Include="WAVE\Format Chunk\NonPCMFormat.cs" />
     <Compile Include="WAVE\MetaData\Channel.cs" />
     <Compile Include="WAVE\Data Chunk\DataBlock.cs" />
-    <Compile Include="WAVE\Format Chunk\FactChunk.cs" />
     <Compile Include="WAVE\Format Chunk\FmtBlock.cs" />
     <Compile Include="WAVE\Riff Chunk\RiffBlock.cs" />
     <Compile Include="WAVE\Sample\Sample.cs" />
