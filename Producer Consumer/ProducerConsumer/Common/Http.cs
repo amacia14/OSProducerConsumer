@@ -50,9 +50,9 @@ namespace Common
 			return result;
 	    }
 
-		public static bool Get()
-		{
-			var httpRequest = WebRequest.Create(url);
-		}
+		//public static bool Get()
+		//{
+		//	var httpRequest = WebRequest.Create(url);
+		//}
     }
 }
