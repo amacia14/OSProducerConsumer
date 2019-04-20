@@ -11,5 +11,10 @@ namespace Producer
 		static void Main(string[] args)
 		{
 		}
+
+		public static void producer()
+		{
+			
+		}
 	}
 }
