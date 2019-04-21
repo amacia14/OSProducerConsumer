@@ -2,59 +2,28 @@ namespace Common.settings
 {
     public class Settings
     {
-        private int numOfClients;
-        private int numOfProducers;
-        private int bufferSize;
-        private int consumersleepNum;
-        private int producerSleepNum;
+        public int NumOfClients { get; set; }
+        public int NumOfProducers { get; set; }
+        public int BufferSize { get; set; }
+        public int ConsumersleepNum { get; set; }
+        public int ProducerWordCount { get; set; }
+        public int ProducerSleepNum { get; set; }
 
-        /// <summary>
-        ///  Will look at the previous setting and will
-        /// return the names of the variables that have been changed 
-        /// </summary>
-        /// <returns> names of variables that have been modified </returns>
-        public void stateChange()
-        {
-            
-            
-            
-            
-        }
-        
-        /// <summary>
-        /// will make the changes necessary
-        /// or if no changes have been made
-        /// the method will send settings to the producer.
-        /// </summary>
-        public static void changeSettings(){
+		/// <summary>
+		///  Will look at the previous setting and will
+		/// return the names of the variables that have been changed 
+		/// </summary>
+		/// <returns> names of variables that have been modified </returns>
+		public Settings(int numConsumer, int numProducer, int bufferSize, int consumerSleep, int producerWord, int producerSleep)
+		{
+			this.NumOfClients = numConsumer;
+			this.NumOfProducers = numProducer;
+			this.BufferSize = bufferSize;
+			this.ConsumersleepNum = consumerSleep;
+			this.ProducerWordCount = producerWord;
+			this.ProducerSleepNum = producerSleep;
 
-          if (numOfClients != x) // Some previous client state)
-          {
-                
-          }
-         
-         if (numOfProducers != x)//some previous producer state
-         {
-                //change state of producer
-         }
-         
-         if (bufferSize != x)// x is some previous buffer size
-         {
-             //change size of producer 
-         }
-
-         if (consumersleepNum != x) // x is some previous sleep num
-         {
-             // change sleep num 
-         }
-
-         if (producerSleepNum != x) // x is some previous producer sleep num
-         {
-             
-         }
-
-        }
-     
+		}
     }
    
 }

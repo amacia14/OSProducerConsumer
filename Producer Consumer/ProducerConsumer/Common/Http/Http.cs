@@ -72,6 +72,11 @@ namespace Common
 			return Get("Get.aspx");
 		}
 
+		/// <summary>
+		/// Get an object from the url
+		/// </summary>
+		/// <param name="url">The handler</param>
+		/// <returns>The object you choose</returns>
 		public static T Get(string url)
 		{
 			var httpRequest = WebRequest.Create(baseurl + url);
