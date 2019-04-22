@@ -4,8 +4,10 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Messaging;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using Common;
@@ -21,7 +23,7 @@ namespace ProducerServer
 	{
 		private Settings _settings;
 		private List<Thread> _threads { get; set; }
-		private ConcurrentBuffer _buffer { get; }
+		private ConcurrentBuffer _buffer { get; set; }
 
 		public Producer()
 		{
@@ -52,13 +54,22 @@ namespace ProducerServer
 				{
 					responseType = typeof(string);
 					response = Get();
+					if (response == null)
+					{
+						context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+						context.Response.Flush();
+						return;
+					}
+
+					context.Response.StatusCode = (int) HttpStatusCode.OK;
+
 					Json.Serialize((string)response, context.Response.OutputStream);
 					context.Response.Flush();
 					return;
 				}
 				default:
 				{
-					context.Response.StatusCode = 400;
+					context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
 					context.Response.Flush();
 					return;
 				}
@@ -67,20 +78,39 @@ namespace ProducerServer
 
 		private string Get()
 		{
-			return "Hello world";
+			if (_buffer == null)
+				return null;
+
+			string url = "";
+			bool isSuccess = _buffer.TryTake(out url);
+			if (!isSuccess)
+			{
+				return null;
+			}
+
+			var fileStream = File.Open(url, FileMode.Open);
+			return new StreamReader(fileStream).ReadToEnd();
 		}
 
 		private HttpStatusCode Post(Settings settings)
 		{
+			if (settings == null)
+				return HttpStatusCode.BadRequest;
 			_settings = settings;
 
 			if(_buffer == null || _settings.BufferSize > _buffer.Size)
 				_buffer = new ConcurrentBuffer(_settings.BufferSize);
 			if (_settings.NumOfProducers > _threads.Count)
 			{
-				Thread thread = new Thread();
+				Task.Run(() =>
+				{
+					//TODO: Assign producer method to the thread
+					//Thread thread = new Thread();
+				});
 			}
-				
+
+			//Since other related settings with producer would be in other class.  Get the class to grab the _settings.
+
 			return HttpStatusCode.OK;
 		}
 
@@ -88,7 +118,7 @@ namespace ProducerServer
 		{
 			get
 			{
-				return false;
+				return true;
 			}
 		}
 	}

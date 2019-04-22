@@ -91,6 +91,13 @@
       <Project>{c59d5d81-e1d9-40ff-b1d1-4bdcd0765761}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Producer\Producer.csproj">
+      <Project>{8dbec773-9d6f-4cb1-a97e-0765c8ff5a95}</Project>
+      <Name>Producer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

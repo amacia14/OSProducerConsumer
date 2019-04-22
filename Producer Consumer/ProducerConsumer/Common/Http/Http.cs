@@ -19,6 +19,7 @@ namespace Common
     {
 	    private string _baseUrl = "/";
 	    private int _port;
+	    private static string producer = "Producer.ashx";
 		public static JsonSerializer _Serializer = JsonSerializer.Create();
 		
 		public Http (string baseUrl, int port)
@@ -29,7 +30,7 @@ namespace Common
 
 	    public HttpStatusCode Post(Settings data)
 	    {
-		    return Post(data, _baseUrl + "Producer.ashx");
+		    return Post(data, _baseUrl + ":" + _port + "/" + "Producer.ashx");
 	    }
 
 		/// <summary>
@@ -43,8 +44,6 @@ namespace Common
 			var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
 		    httpWebRequest.ContentType = "application/json";
 		    httpWebRequest.Method = "POST";
-
-			//Do content length
 
 			var stream = Json.Serialize(data, httpWebRequest.GetRequestStream());
 
@@ -66,18 +65,20 @@ namespace Common
 		/// Get an object from the url
 		/// </summary>
 		/// <param name="url">The handler</param>
-		/// <returns>The object you choose</returns>
+		/// <returns>Contents of file</returns>
 		public string Get(string url)
 		{
-			var httpRequest = WebRequest.Create(_baseUrl + url);
+			var httpRequest = WebRequest.Create(_baseUrl + ":" + _port + "/" + url);
 			httpRequest.ContentType = "application/json";
 			httpRequest.Method = "GET";
-
 			
 
 			var httpReponse = (HttpWebResponse) httpRequest.GetResponse();
 
-			return (string)Json.DeSerialize(httpReponse.GetResponseStream());
+			if (httpReponse.StatusCode != HttpStatusCode.OK)
+				return null;
+			else
+				return (string)Json.DeSerialize(httpReponse.GetResponseStream());
 		}
 	}
 }

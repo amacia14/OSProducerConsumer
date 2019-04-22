@@ -9,7 +9,7 @@ namespace Producer
 
 		private Semaphore _available;
 		private Semaphore _items;
-		public readonly int Size;
+		public int Size;
 
 
 		public ConcurrentBuffer(int size)
