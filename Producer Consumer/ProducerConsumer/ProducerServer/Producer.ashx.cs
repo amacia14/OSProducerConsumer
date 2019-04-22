@@ -104,13 +104,13 @@ namespace ProducerServer
 			{
 				Task.Run(() =>
 				{
-					//TODO: Assign producer method to the thread
+					//TODO: Assign producer method to the thread with a delegate
+					//Send a method to update number of words
+					//Send a method to update producer sleep
 					//Thread thread = new Thread();
 				});
 			}
-
-			//Since other related settings with producer would be in other class.  Get the class to grab the _settings.
-
+			
 			return HttpStatusCode.OK;
 		}
 
