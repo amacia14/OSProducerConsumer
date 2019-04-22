@@ -15,15 +15,21 @@ using Newtonsoft.Json;
 namespace Common
 {
 
-    public static class Http<T>
+    public class Http
     {
-	    private static string baseurl = "/";
-	    
-	    private static JsonSerializer serializer = JsonSerializer.Create();
+	    private string _baseUrl = "/";
+	    private int _port;
+		public static JsonSerializer _Serializer = JsonSerializer.Create();
+		
+		public Http (string baseUrl, int port)
+		{
+			_baseUrl = baseUrl;
+			_port = port;
+		}
 
-	    public static HttpStatusCode Post(T data)
+	    public HttpStatusCode Post(Settings data)
 	    {
-		    return Post(data, baseurl + "Post.aspx");
+		    return Post(data, _baseUrl + "Producer.ashx");
 	    }
 
 		/// <summary>
@@ -32,44 +38,28 @@ namespace Common
 		/// <param name="data">Any data to post.</param>
 		/// <param name="url">The handler location.</param>
 		/// <returns>HttpStatusCode</returns>
-		public static HttpStatusCode Post(T data, string url)
+		private  HttpStatusCode Post(Settings data, string url)
 	    {
 			var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
 		    httpWebRequest.ContentType = "application/json";
-		    httpWebRequest.Method = "POST"; 
+		    httpWebRequest.Method = "POST";
 
 			//Do content length
 
-		    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-		    {
-			    JsonWriter writer = new JsonTextWriter(streamWriter);
-				serializer.Serialize(writer, data);
-				
-				writer.Flush();
-				writer.Close();
-			    streamWriter.Close();
-		    }
+			var stream = Json.Serialize(data, httpWebRequest.GetRequestStream());
+
+			stream.Flush();
 
 		    WebResponse response = httpWebRequest.GetResponse();
-			
-			Console.WriteLine("Received data");
 
-			HttpStatusCode result;
-			using (var streamReader = response.GetResponseStream())
-			{
-				JsonReader reader = new JsonTextReader(new StreamReader(streamReader));
-				result  = (HttpStatusCode)serializer.Deserialize(reader);
-
-				reader.Close();
-			}
-			response.Dispose();
+			var result = (HttpStatusCode)Json.DeSerialize(response.GetResponseStream());
 
 			return result;
 	    }
 
-		public static T Get()
+		public string Get()
 		{
-			return Get("Get.aspx");
+			return Get("Producer.ashx");
 		}
 
 		/// <summary>
@@ -77,25 +67,17 @@ namespace Common
 		/// </summary>
 		/// <param name="url">The handler</param>
 		/// <returns>The object you choose</returns>
-		public static T Get(string url)
+		public string Get(string url)
 		{
-			var httpRequest = WebRequest.Create(baseurl + url);
+			var httpRequest = WebRequest.Create(_baseUrl + url);
 			httpRequest.ContentType = "application/json";
 			httpRequest.Method = "GET";
 
+			
 
 			var httpReponse = (HttpWebResponse) httpRequest.GetResponse();
-			T result;
-			using (var streamReader = new StreamReader(httpReponse.GetResponseStream()))
-			{
-				JsonReader reader = new JsonTextReader(new StringReader(streamReader.ReadToEnd()));
-				result = (T)serializer.Deserialize(reader);
 
-				reader.Close();
-				streamReader.Close();
-			}
-
-			return result;
+			return (string)Json.DeSerialize(httpReponse.GetResponseStream());
 		}
 	}
 }

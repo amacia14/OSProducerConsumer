@@ -1,4 +1,4 @@
-namespace Common.settings
+namespace Common
 {
     public class Settings
     {
