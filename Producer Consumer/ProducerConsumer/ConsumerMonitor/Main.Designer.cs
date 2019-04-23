@@ -51,34 +51,21 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.txtbxProducers = new System.Windows.Forms.TextBox();
-			this.tbpOptions = new System.Windows.Forms.TabPage();
-			this.cmdSendSetting = new System.Windows.Forms.Button();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.label12 = new System.Windows.Forms.Label();
-			this.textBox5 = new System.Windows.Forms.TextBox();
-			this.label13 = new System.Windows.Forms.Label();
-			this.textBox9 = new System.Windows.Forms.TextBox();
-			this.label17 = new System.Windows.Forms.Label();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.textBox7 = new System.Windows.Forms.TextBox();
-			this.label14 = new System.Windows.Forms.Label();
-			this.label15 = new System.Windows.Forms.Label();
-			this.label16 = new System.Windows.Forms.Label();
-			this.textBox8 = new System.Windows.Forms.TextBox();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.listView1 = new System.Windows.Forms.ListView();
+			this.colThreadName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colSentence = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabControl1.SuspendLayout();
 			this.tbpInit.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.tbpOptions.SuspendLayout();
-			this.groupBox4.SuspendLayout();
+			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.tbpInit);
-			this.tabControl1.Controls.Add(this.tbpOptions);
 			this.tabControl1.Controls.Add(this.tabPage1);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -285,154 +272,42 @@
 			this.txtbxProducers.Size = new System.Drawing.Size(100, 20);
 			this.txtbxProducers.TabIndex = 3;
 			// 
-			// tbpOptions
-			// 
-			this.tbpOptions.Controls.Add(this.cmdSendSetting);
-			this.tbpOptions.Controls.Add(this.groupBox4);
-			this.tbpOptions.Location = new System.Drawing.Point(4, 22);
-			this.tbpOptions.Name = "tbpOptions";
-			this.tbpOptions.Padding = new System.Windows.Forms.Padding(3);
-			this.tbpOptions.Size = new System.Drawing.Size(336, 358);
-			this.tbpOptions.TabIndex = 1;
-			this.tbpOptions.Text = "Options";
-			this.tbpOptions.UseVisualStyleBackColor = true;
-			// 
-			// cmdSendSetting
-			// 
-			this.cmdSendSetting.Location = new System.Drawing.Point(18, 220);
-			this.cmdSendSetting.Name = "cmdSendSetting";
-			this.cmdSendSetting.Size = new System.Drawing.Size(84, 23);
-			this.cmdSendSetting.TabIndex = 12;
-			this.cmdSendSetting.Text = "Send Settings";
-			this.cmdSendSetting.UseVisualStyleBackColor = true;
-			this.cmdSendSetting.Click += new System.EventHandler(this.cmdSendSetting_Click);
-			// 
-			// groupBox4
-			// 
-			this.groupBox4.Controls.Add(this.textBox4);
-			this.groupBox4.Controls.Add(this.label12);
-			this.groupBox4.Controls.Add(this.textBox5);
-			this.groupBox4.Controls.Add(this.label13);
-			this.groupBox4.Controls.Add(this.textBox9);
-			this.groupBox4.Controls.Add(this.label17);
-			this.groupBox4.Controls.Add(this.textBox6);
-			this.groupBox4.Controls.Add(this.textBox7);
-			this.groupBox4.Controls.Add(this.label14);
-			this.groupBox4.Controls.Add(this.label15);
-			this.groupBox4.Controls.Add(this.label16);
-			this.groupBox4.Controls.Add(this.textBox8);
-			this.groupBox4.Location = new System.Drawing.Point(8, 6);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(274, 208);
-			this.groupBox4.TabIndex = 9;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Mandatory";
-			// 
-			// textBox4
-			// 
-			this.textBox4.Location = new System.Drawing.Point(154, 162);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(100, 20);
-			this.textBox4.TabIndex = 11;
-			// 
-			// label12
-			// 
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(7, 165);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(120, 13);
-			this.label12.TabIndex = 10;
-			this.label12.Text = "Producer Sleep Number";
-			// 
-			// textBox5
-			// 
-			this.textBox5.Location = new System.Drawing.Point(154, 132);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.Size = new System.Drawing.Size(100, 20);
-			this.textBox5.TabIndex = 9;
-			// 
-			// label13
-			// 
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(7, 135);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(110, 13);
-			this.label13.TabIndex = 8;
-			this.label13.Text = "Producer Word Count";
-			// 
-			// textBox9
-			// 
-			this.textBox9.Location = new System.Drawing.Point(154, 101);
-			this.textBox9.Name = "textBox9";
-			this.textBox9.Size = new System.Drawing.Size(100, 20);
-			this.textBox9.TabIndex = 7;
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.Location = new System.Drawing.Point(7, 104);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(127, 13);
-			this.label17.TabIndex = 6;
-			this.label17.Text = "Consumer Sleep Number:";
-			// 
-			// textBox6
-			// 
-			this.textBox6.Location = new System.Drawing.Point(155, 19);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(100, 20);
-			this.textBox6.TabIndex = 1;
-			// 
-			// textBox7
-			// 
-			this.textBox7.Location = new System.Drawing.Point(155, 72);
-			this.textBox7.Name = "textBox7";
-			this.textBox7.Size = new System.Drawing.Size(100, 20);
-			this.textBox7.TabIndex = 5;
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(5, 19);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(143, 13);
-			this.label14.TabIndex = 0;
-			this.label14.Text = "Number of Client Consumers:";
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(5, 75);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(58, 13);
-			this.label15.TabIndex = 4;
-			this.label15.Text = "Buffer Size";
-			// 
-			// label16
-			// 
-			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(5, 48);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(107, 13);
-			this.label16.TabIndex = 2;
-			this.label16.Text = "Number of Producers";
-			// 
-			// textBox8
-			// 
-			this.textBox8.Location = new System.Drawing.Point(155, 45);
-			this.textBox8.Name = "textBox8";
-			this.textBox8.Size = new System.Drawing.Size(100, 20);
-			this.textBox8.TabIndex = 3;
-			// 
 			// tabPage1
 			// 
+			this.tabPage1.Controls.Add(this.listView1);
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPage1.Size = new System.Drawing.Size(336, 358);
 			this.tabPage1.TabIndex = 2;
-			this.tabPage1.Text = "tabPage1";
+			this.tabPage1.Text = "Results";
 			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// listView1
+			// 
+			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colThreadName,
+            this.colActive,
+            this.colSentence});
+			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listView1.Location = new System.Drawing.Point(3, 3);
+			this.listView1.Name = "listView1";
+			this.listView1.Size = new System.Drawing.Size(330, 352);
+			this.listView1.TabIndex = 0;
+			this.listView1.UseCompatibleStateImageBehavior = false;
+			this.listView1.View = System.Windows.Forms.View.Details;
+			// 
+			// colThreadName
+			// 
+			this.colThreadName.Text = "Thread name";
+			// 
+			// colActive
+			// 
+			this.colActive.Text = "Is Alive";
+			// 
+			// colSentence
+			// 
+			this.colSentence.Text = "Sentence";
 			// 
 			// Main
 			// 
@@ -448,9 +323,7 @@
 			this.groupBox2.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.tbpOptions.ResumeLayout(false);
-			this.groupBox4.ResumeLayout(false);
-			this.groupBox4.PerformLayout();
+			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -459,7 +332,6 @@
 
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tbpInit;
-		private System.Windows.Forms.TabPage tbpOptions;
 		private System.Windows.Forms.TextBox txtbxProducers;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox txtbxClients;
@@ -480,21 +352,11 @@
 		private System.Windows.Forms.TextBox txtbxPort;
 		private System.Windows.Forms.Button cmdTestConnection;
 		private System.Windows.Forms.Button cmdSendSettings;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.TextBox textBox7;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.TextBox textBox8;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.TextBox textBox9;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Button cmdSendSetting;
 		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.ListView listView1;
+		private System.Windows.Forms.ColumnHeader colThreadName;
+		private System.Windows.Forms.ColumnHeader colActive;
+		private System.Windows.Forms.ColumnHeader colSentence;
 	}
 }
 
