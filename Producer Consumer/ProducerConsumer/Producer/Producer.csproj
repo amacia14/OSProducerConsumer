@@ -48,8 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConcurrentBuffer.cs" />
-    <Compile Include="Get.cs" />
-    <Compile Include="Post.cs" />
+    <Compile Include="ConcurrentCircularBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

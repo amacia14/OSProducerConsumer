@@ -56,7 +56,7 @@
 			this.colThreadName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colSentence = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.bkWorker = new System.ComponentModel.BackgroundWorker();
 			this.tabControl1.SuspendLayout();
 			this.tbpInit.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -132,7 +132,6 @@
 			this.txtbxProducerSleep.Size = new System.Drawing.Size(100, 20);
 			this.txtbxProducerSleep.TabIndex = 5;
 			this.txtbxProducerSleep.Text = "50";
-			this.txtbxProducerSleep.TextChanged += new System.EventHandler(this.txtbxProducerSleep_TextChanged);
 			// 
 			// label6
 			// 
@@ -150,7 +149,6 @@
 			this.txtbxWordCount.Size = new System.Drawing.Size(100, 20);
 			this.txtbxWordCount.TabIndex = 3;
 			this.txtbxWordCount.Text = "1000";
-			this.txtbxWordCount.TextChanged += new System.EventHandler(this.txtbxWordCount_TextChanged);
 			// 
 			// label5
 			// 
@@ -168,7 +166,6 @@
 			this.txtbxConsumerSleep.Size = new System.Drawing.Size(100, 20);
 			this.txtbxConsumerSleep.TabIndex = 1;
 			this.txtbxConsumerSleep.Text = "100";
-			this.txtbxConsumerSleep.TextChanged += new System.EventHandler(this.txtbxConsumerSleep_TextChanged);
 			// 
 			// label4
 			// 
@@ -237,7 +234,6 @@
 			this.txtbxClients.Name = "txtbxClients";
 			this.txtbxClients.Size = new System.Drawing.Size(100, 20);
 			this.txtbxClients.TabIndex = 1;
-			this.txtbxClients.TextChanged += new System.EventHandler(this.txtbxClients_TextChanged);
 			// 
 			// txtbxBufferSize
 			// 
@@ -245,7 +241,6 @@
 			this.txtbxBufferSize.Name = "txtbxBufferSize";
 			this.txtbxBufferSize.Size = new System.Drawing.Size(100, 20);
 			this.txtbxBufferSize.TabIndex = 5;
-			this.txtbxBufferSize.TextChanged += new System.EventHandler(this.txtbxBufferSize_TextChanged);
 			// 
 			// label1
 			// 
@@ -280,7 +275,6 @@
 			this.txtbxProducers.Name = "txtbxProducers";
 			this.txtbxProducers.Size = new System.Drawing.Size(100, 20);
 			this.txtbxProducers.TabIndex = 3;
-			this.txtbxProducers.TextChanged += new System.EventHandler(this.txtbxProducers_TextChanged);
 			// 
 			// tabPage1
 			// 
@@ -319,6 +313,10 @@
 			// colSentence
 			// 
 			this.colSentence.Text = "Sentence";
+			// 
+			// bkWorker
+			// 
+			this.bkWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bkWorker_DoWork);
 			// 
 			// Main
 			// 
@@ -368,7 +366,7 @@
 		private System.Windows.Forms.ColumnHeader colThreadName;
 		private System.Windows.Forms.ColumnHeader colActive;
 		private System.Windows.Forms.ColumnHeader colSentence;
-		private System.ComponentModel.BackgroundWorker backgroundWorker1;
+		private System.ComponentModel.BackgroundWorker bkWorker;
 	}
 }
 

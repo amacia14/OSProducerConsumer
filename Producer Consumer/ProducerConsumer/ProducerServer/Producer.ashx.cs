@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using Common;
-using Newtonsoft.Json;
 using Producer;
 
 namespace ProducerServer
@@ -33,52 +32,68 @@ namespace ProducerServer
 
 		public void ProcessRequest(HttpContext context)
 		{
-			context.Response.ContentType = "application/json";
-			var request = context.Request;
-
-			object response = null;
-			Type responseType = null;
-
-			switch (request.HttpMethod.ToLower())
+			try
 			{
-				case "post":
+				context.Response.ContentType = "application/json";
+				var request = context.Request;
+
+				object response = null;
+				Type responseType = null;
+
+
+				switch (request.HttpMethod.ToLower())
 				{
-					Settings settings = null;
-					responseType = typeof(HttpStatusCode);
-					var status = Post(settings);
-					context.Response.StatusCode = (int) status;
-					context.Response.Flush();
-					return;
-				}
-				case "get":
-				{
-					responseType = typeof(string);
-					response = Get();
-					if (response == null)
+					case "post":
+					{
+						Settings settings = (Settings)Json.DeSerialize<Settings>(request.InputStream);
+						responseType = typeof(HttpStatusCode);
+						var status = Post(settings);
+						context.Response.StatusCode = (int) status;
+						context.Response.Flush();
+						return;
+					}
+					case "get":
+					{
+
+						if (request.ContentType.Equals("text/plain"))
+						{
+							goto case "test";
+						}
+
+						responseType = typeof(string);
+						response = Get();
+						if (response == null)
+						{
+							context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+							context.Response.Flush();
+							return;
+						}
+
+						context.Response.StatusCode = (int) HttpStatusCode.OK;
+
+						Json.Serialize((string) response, context.Response.OutputStream);
+						context.Response.Flush();
+						return;
+					}
+					case "test":
+					{
+						context.Response.Write("ping pong");
+						context.Response.Flush();
+						return;
+					}
+					default:
 					{
 						context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
 						context.Response.Flush();
 						return;
 					}
+				}
+			}
 
-					context.Response.StatusCode = (int) HttpStatusCode.OK;
-
-					Json.Serialize((string)response, context.Response.OutputStream);
-					context.Response.Flush();
-					return;
-				}
-				case "test":
-				{
-					context.Response.Write("ping pong");
-					context.Response.Flush();
-					return;
-				}
-				default:
-				{
-					context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-					context.Response.Flush();
-					return;
-				}
+			catch (Exception e)
+			{
+				var crapper = e;
+				return;
 			}
 		}
 
@@ -93,6 +108,7 @@ namespace ProducerServer
 			{
 				return null;
 			}
+			//else
 
 			var fileStream = File.Open(url, FileMode.Open);
 			return new StreamReader(fileStream).ReadToEnd();
@@ -108,13 +124,16 @@ namespace ProducerServer
 				_buffer = new ConcurrentBuffer(_settings.BufferSize);
 			if (_settings.NumOfProducers > _threads.Count)
 			{
-				Task.Run(() =>
+				while(_settings.NumOfProducers > _threads.Count)
 				{
-					//TODO: Assign producer method to the thread with a delegate
-					//Send a method to update number of words
-					//Send a method to update producer sleep
-					//Thread thread = new Thread();
-				});
+					Task.Run(() =>
+					{
+						//TODO: Assign producer method to the thread with a delegate
+						//Send a method to update number of words
+						//Send a method to update producer sleep
+						//Thread thread = new Thread();
+					});
+				}
 			}
 			
 			return HttpStatusCode.OK;

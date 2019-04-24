@@ -1,8 +1,10 @@
+using System.Collections.Concurrent;
+
 namespace Producer
 {
     public class ConcurrentCircularBuffer<T>
     {
-        private System.Collections.Concurrent.ConcurrentQueue<T> _buffer;
+        private System.Collections.Concurrent.ConcurrentQueue<string> _buffer;
         
         private int _last = 0;
         private int _size;
@@ -12,47 +14,30 @@ namespace Producer
         public ConcurrentCircularBuffer(int size)
         {
             this._size = size;
-            _buffer = new T[size + 1];
+            _buffer = new ConcurrentQueue<string>();
         }
 
-        public void put(T item)
+        public void put(string item)
         {
-            lock(_lockObject);
-            _last++;
-            _last = _last > _size ? 1 : _last;
-            _buffer[_last] = item;
-
+	        lock (_lockObject)
+	        {
+		        _last++;
+		        _last = _last > _size ? 1 : _last;
+		        _buffer.Enqueue(item);
+			}
         }
 
-        public T[] Read()
+        public string Read()
         {
-            T[] arr = new T[_size];
-
             lock (_lockObject)
             {
-                int iterator = 0;
-                for (int read = 0; read < _size; read++)
-                {
-                    int index = _last - iterator;
-                    index = index <= 0 ? (_size + index) : index;
-                    if (index != null)
-                    {
-                        arr[iterator] = _buffer[_index];
-                    }
-                    else
-                    {
-                        break;
-                    }
-
-                    iterator++;
-                }
+	            string thing;
+	            var success = _buffer.TryDequeue(out thing);
+	            if (success)
+		            return thing;
+	            else
+		            return "";
             }
-
-            return arr;
-
         }
-
-
-
     }
 }

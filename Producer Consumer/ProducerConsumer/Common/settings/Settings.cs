@@ -1,6 +1,9 @@
+using System;
+
 namespace Common
 {
-    public class Settings
+	[Serializable]
+	public class Settings
     {
         public int NumOfClients { get; set; }
         public int NumOfProducers { get; set; }
