@@ -18,21 +18,19 @@ namespace Common
 
     public class Http
     {
-	    private string _baseUrl = "/";
-	    private int _port;
+	    private string _baseUrl = "http://";
 	    private static string _producer = "Producer.ashx";
 		public static JsonSerializer _Serializer = JsonSerializer.Create();
 		
 		public Http (string baseUrl, int port)
 		{
-			_baseUrl = baseUrl;
-			_port = port;
+			_baseUrl = "http://" + baseUrl + ":" + port + "/";
 		}
 
 		#region Post
 	    public HttpStatusCode Post(Settings data)
 	    {
-		    return Post(data, _baseUrl + ":" + _port + "/" + _producer);
+		    return Post(data, _baseUrl + _producer);
 	    }
 
 		/// <summary>
@@ -72,7 +70,7 @@ namespace Common
 		/// <returns>Contents of file</returns>
 		public string Get(string url)
 		{
-			var httpRequest = WebRequest.Create(_baseUrl + ":" + _port + "/" + url);
+			var httpRequest = WebRequest.Create(_baseUrl + url);
 			httpRequest.ContentType = "application/json";
 			httpRequest.Method = "GET";
 			
@@ -90,13 +88,28 @@ namespace Common
 
 		public bool TestConnection()
 		{
-			Ping ping = new Ping();
-			PingReply reply = ping.Send(_baseUrl + ":" + _port + "/" + _producer);
+			return TestConnection(_producer);
+		}
 
-			if (reply.Status == IPStatus.Success)
-				return true;
-			else
+		public bool TestConnection(string url)
+		{
+			var httpRequest = WebRequest.Create(_baseUrl + url);
+			httpRequest.ContentType = "text/plain";
+			httpRequest.Method = "TEST";
+
+			try
+			{
+				var httpResponse = (HttpWebResponse) httpRequest.GetResponse();
+				StreamReader reader = new StreamReader(httpResponse.GetResponseStream());
+				if(reader.ReadToEnd().Contains("ping pong"))
+					return true;
+				else
+					return false;
+			}
+			catch
+			{
 				return false;
+			}
 		}
 		#endregion
 	}

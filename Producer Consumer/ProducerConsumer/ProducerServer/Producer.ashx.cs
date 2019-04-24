@@ -67,6 +67,12 @@ namespace ProducerServer
 					context.Response.Flush();
 					return;
 				}
+				case "test":
+				{
+					context.Response.Write("ping pong");
+					context.Response.Flush();
+					return;
+				}
 				default:
 				{
 					context.Response.StatusCode = (int) HttpStatusCode.BadRequest;
