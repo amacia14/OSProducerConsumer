@@ -35,12 +35,12 @@ namespace ConsumerMonitor
 		{
 			try
 			{
-				int clients = Convert.ToInt32(txtbxClients.Text);
-				int producer = Convert.ToInt32(txtbxProducers.Text);
-				int bufferSize = Convert.ToInt32(txtbxBufferSize.Text);
-				int ConsumerSleep = Convert.ToInt32(txtbxConsumerSleep.Text);
-				int producerSleep = Convert.ToInt32(txtbxProducerSleep.Text);
-				int word = Convert.ToInt32(txtbxWordCount.Text);
+				int clients = Convert.ToInt32(nClients.Value);
+				int producer = Convert.ToInt32(nProducers.Value);
+				int bufferSize = Convert.ToInt32(nBufferSize.Value);
+				int ConsumerSleep = Convert.ToInt32(nConsumerSleep.Value);
+				int producerSleep = Convert.ToInt32(nProducerSleep.Value);
+				int word = Convert.ToInt32(nWordCount.Value);
 				_settings = new Settings(clients, producer, bufferSize, ConsumerSleep, word, producerSleep);
 			}
 			catch (Exception e)
@@ -56,6 +56,8 @@ namespace ConsumerMonitor
 				{
 					MessageBox.Show("Setting posted successfully");
 					CheckSettings();
+
+					tpSettings.Name = "Settings";
 				}
 				else
 					MessageBox.Show("Setting NOT successful.");
@@ -74,7 +76,7 @@ namespace ConsumerMonitor
 		#region Test Connection
 		private void cmdTestConnection_Click(object sender, EventArgs e)
 		{
-			var test = this.test(txtbxBaseUrl.Text, Convert.ToInt32(txtbxPort.Text));
+			var test = this.test(txtbxBaseUrl.Text, Convert.ToInt32(nPort.Value));
 			if (test)
 				MessageBox.Show("Found correct server");
 			else

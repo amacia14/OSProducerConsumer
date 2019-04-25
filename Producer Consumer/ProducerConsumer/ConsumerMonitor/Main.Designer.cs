@@ -30,44 +30,51 @@
 		private void InitializeComponent()
 		{
 			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.tbpInit = new System.Windows.Forms.TabPage();
+			this.tpSettings = new System.Windows.Forms.TabPage();
 			this.cmdSendSettings = new System.Windows.Forms.Button();
 			this.cmdTestConnection = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.txtbxProducerSleep = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
-			this.txtbxWordCount = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.txtbxConsumerSleep = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.txtbxPort = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.txtbxBaseUrl = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
-			this.txtbxClients = new System.Windows.Forms.TextBox();
-			this.txtbxBufferSize = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.txtbxProducers = new System.Windows.Forms.TextBox();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.tpResults = new System.Windows.Forms.TabPage();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.colThreadName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colSentence = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.bkWorker = new System.ComponentModel.BackgroundWorker();
+			this.nClients = new System.Windows.Forms.NumericUpDown();
+			this.nProducers = new System.Windows.Forms.NumericUpDown();
+			this.nBufferSize = new System.Windows.Forms.NumericUpDown();
+			this.nPort = new System.Windows.Forms.NumericUpDown();
+			this.nConsumerSleep = new System.Windows.Forms.NumericUpDown();
+			this.nWordCount = new System.Windows.Forms.NumericUpDown();
+			this.nProducerSleep = new System.Windows.Forms.NumericUpDown();
 			this.tabControl1.SuspendLayout();
-			this.tbpInit.SuspendLayout();
+			this.tpSettings.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.tabPage1.SuspendLayout();
+			this.tpResults.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nClients)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nProducers)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nBufferSize)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nPort)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nConsumerSleep)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nWordCount)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nProducerSleep)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl1
 			// 
-			this.tabControl1.Controls.Add(this.tbpInit);
-			this.tabControl1.Controls.Add(this.tabPage1);
+			this.tabControl1.Controls.Add(this.tpSettings);
+			this.tabControl1.Controls.Add(this.tpResults);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.MinimumSize = new System.Drawing.Size(344, 384);
@@ -76,19 +83,19 @@
 			this.tabControl1.Size = new System.Drawing.Size(344, 384);
 			this.tabControl1.TabIndex = 0;
 			// 
-			// tbpInit
+			// tpSettings
 			// 
-			this.tbpInit.Controls.Add(this.cmdSendSettings);
-			this.tbpInit.Controls.Add(this.cmdTestConnection);
-			this.tbpInit.Controls.Add(this.groupBox2);
-			this.tbpInit.Controls.Add(this.groupBox1);
-			this.tbpInit.Location = new System.Drawing.Point(4, 22);
-			this.tbpInit.Name = "tbpInit";
-			this.tbpInit.Padding = new System.Windows.Forms.Padding(3);
-			this.tbpInit.Size = new System.Drawing.Size(336, 358);
-			this.tbpInit.TabIndex = 0;
-			this.tbpInit.Text = "Initialize";
-			this.tbpInit.UseVisualStyleBackColor = true;
+			this.tpSettings.Controls.Add(this.cmdSendSettings);
+			this.tpSettings.Controls.Add(this.cmdTestConnection);
+			this.tpSettings.Controls.Add(this.groupBox2);
+			this.tpSettings.Controls.Add(this.groupBox1);
+			this.tpSettings.Location = new System.Drawing.Point(4, 22);
+			this.tpSettings.Name = "tpSettings";
+			this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
+			this.tpSettings.Size = new System.Drawing.Size(336, 358);
+			this.tpSettings.TabIndex = 0;
+			this.tpSettings.Text = "Initialize";
+			this.tpSettings.UseVisualStyleBackColor = true;
 			// 
 			// cmdSendSettings
 			// 
@@ -112,11 +119,11 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.txtbxProducerSleep);
+			this.groupBox2.Controls.Add(this.nProducerSleep);
+			this.groupBox2.Controls.Add(this.nWordCount);
+			this.groupBox2.Controls.Add(this.nConsumerSleep);
 			this.groupBox2.Controls.Add(this.label6);
-			this.groupBox2.Controls.Add(this.txtbxWordCount);
 			this.groupBox2.Controls.Add(this.label5);
-			this.groupBox2.Controls.Add(this.txtbxConsumerSleep);
 			this.groupBox2.Controls.Add(this.label4);
 			this.groupBox2.Location = new System.Drawing.Point(8, 177);
 			this.groupBox2.Name = "groupBox2";
@@ -124,14 +131,6 @@
 			this.groupBox2.TabIndex = 6;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Optional";
-			// 
-			// txtbxProducerSleep
-			// 
-			this.txtbxProducerSleep.Location = new System.Drawing.Point(150, 77);
-			this.txtbxProducerSleep.Name = "txtbxProducerSleep";
-			this.txtbxProducerSleep.Size = new System.Drawing.Size(100, 20);
-			this.txtbxProducerSleep.TabIndex = 5;
-			this.txtbxProducerSleep.Text = "50";
 			// 
 			// label6
 			// 
@@ -142,14 +141,6 @@
 			this.label6.TabIndex = 4;
 			this.label6.Text = "Producer Sleep Number (ms):";
 			// 
-			// txtbxWordCount
-			// 
-			this.txtbxWordCount.Location = new System.Drawing.Point(150, 47);
-			this.txtbxWordCount.Name = "txtbxWordCount";
-			this.txtbxWordCount.Size = new System.Drawing.Size(100, 20);
-			this.txtbxWordCount.TabIndex = 3;
-			this.txtbxWordCount.Text = "1000";
-			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
@@ -158,14 +149,6 @@
 			this.label5.Size = new System.Drawing.Size(110, 13);
 			this.label5.TabIndex = 2;
 			this.label5.Text = "Producer Word Count";
-			// 
-			// txtbxConsumerSleep
-			// 
-			this.txtbxConsumerSleep.Location = new System.Drawing.Point(150, 16);
-			this.txtbxConsumerSleep.Name = "txtbxConsumerSleep";
-			this.txtbxConsumerSleep.Size = new System.Drawing.Size(100, 20);
-			this.txtbxConsumerSleep.TabIndex = 1;
-			this.txtbxConsumerSleep.Text = "100";
 			// 
 			// label4
 			// 
@@ -178,29 +161,22 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.txtbxPort);
+			this.groupBox1.Controls.Add(this.nPort);
+			this.groupBox1.Controls.Add(this.nBufferSize);
+			this.groupBox1.Controls.Add(this.nProducers);
+			this.groupBox1.Controls.Add(this.nClients);
 			this.groupBox1.Controls.Add(this.label8);
 			this.groupBox1.Controls.Add(this.txtbxBaseUrl);
 			this.groupBox1.Controls.Add(this.label7);
-			this.groupBox1.Controls.Add(this.txtbxClients);
-			this.groupBox1.Controls.Add(this.txtbxBufferSize);
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.txtbxProducers);
 			this.groupBox1.Location = new System.Drawing.Point(3, 6);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(274, 156);
 			this.groupBox1.TabIndex = 7;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Mandatory";
-			// 
-			// txtbxPort
-			// 
-			this.txtbxPort.Location = new System.Drawing.Point(155, 126);
-			this.txtbxPort.Name = "txtbxPort";
-			this.txtbxPort.Size = new System.Drawing.Size(100, 20);
-			this.txtbxPort.TabIndex = 9;
 			// 
 			// label8
 			// 
@@ -227,20 +203,6 @@
 			this.label7.Size = new System.Drawing.Size(109, 13);
 			this.label7.TabIndex = 6;
 			this.label7.Text = "* Producer host name";
-			// 
-			// txtbxClients
-			// 
-			this.txtbxClients.Location = new System.Drawing.Point(155, 19);
-			this.txtbxClients.Name = "txtbxClients";
-			this.txtbxClients.Size = new System.Drawing.Size(100, 20);
-			this.txtbxClients.TabIndex = 1;
-			// 
-			// txtbxBufferSize
-			// 
-			this.txtbxBufferSize.Location = new System.Drawing.Point(155, 72);
-			this.txtbxBufferSize.Name = "txtbxBufferSize";
-			this.txtbxBufferSize.Size = new System.Drawing.Size(100, 20);
-			this.txtbxBufferSize.TabIndex = 5;
 			// 
 			// label1
 			// 
@@ -269,23 +231,16 @@
 			this.label2.TabIndex = 2;
 			this.label2.Text = "* Number of Producers";
 			// 
-			// txtbxProducers
+			// tpResults
 			// 
-			this.txtbxProducers.Location = new System.Drawing.Point(155, 45);
-			this.txtbxProducers.Name = "txtbxProducers";
-			this.txtbxProducers.Size = new System.Drawing.Size(100, 20);
-			this.txtbxProducers.TabIndex = 3;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Controls.Add(this.listView1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(336, 358);
-			this.tabPage1.TabIndex = 2;
-			this.tabPage1.Text = "Results";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			this.tpResults.Controls.Add(this.listView1);
+			this.tpResults.Location = new System.Drawing.Point(4, 22);
+			this.tpResults.Name = "tpResults";
+			this.tpResults.Padding = new System.Windows.Forms.Padding(3);
+			this.tpResults.Size = new System.Drawing.Size(336, 358);
+			this.tpResults.TabIndex = 2;
+			this.tpResults.Text = "Results";
+			this.tpResults.UseVisualStyleBackColor = true;
 			// 
 			// listView1
 			// 
@@ -318,6 +273,80 @@
 			// 
 			this.bkWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bkWorker_DoWork);
 			// 
+			// nClients
+			// 
+			this.nClients.Location = new System.Drawing.Point(155, 17);
+			this.nClients.Name = "nClients";
+			this.nClients.Size = new System.Drawing.Size(100, 20);
+			this.nClients.TabIndex = 9;
+			// 
+			// nProducers
+			// 
+			this.nProducers.Location = new System.Drawing.Point(155, 46);
+			this.nProducers.Name = "nProducers";
+			this.nProducers.Size = new System.Drawing.Size(100, 20);
+			this.nProducers.TabIndex = 10;
+			// 
+			// nBufferSize
+			// 
+			this.nBufferSize.Location = new System.Drawing.Point(155, 73);
+			this.nBufferSize.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.nBufferSize.Name = "nBufferSize";
+			this.nBufferSize.Size = new System.Drawing.Size(100, 20);
+			this.nBufferSize.TabIndex = 11;
+			// 
+			// nPort
+			// 
+			this.nPort.Location = new System.Drawing.Point(155, 124);
+			this.nPort.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+			this.nPort.Name = "nPort";
+			this.nPort.Size = new System.Drawing.Size(100, 20);
+			this.nPort.TabIndex = 12;
+			// 
+			// nConsumerSleep
+			// 
+			this.nConsumerSleep.Location = new System.Drawing.Point(150, 17);
+			this.nConsumerSleep.Maximum = new decimal(new int[] {
+            2000000,
+            0,
+            0,
+            0});
+			this.nConsumerSleep.Name = "nConsumerSleep";
+			this.nConsumerSleep.Size = new System.Drawing.Size(100, 20);
+			this.nConsumerSleep.TabIndex = 13;
+			// 
+			// nWordCount
+			// 
+			this.nWordCount.Location = new System.Drawing.Point(150, 48);
+			this.nWordCount.Maximum = new decimal(new int[] {
+            2000000,
+            0,
+            0,
+            0});
+			this.nWordCount.Name = "nWordCount";
+			this.nWordCount.Size = new System.Drawing.Size(100, 20);
+			this.nWordCount.TabIndex = 14;
+			// 
+			// nProducerSleep
+			// 
+			this.nProducerSleep.Location = new System.Drawing.Point(150, 78);
+			this.nProducerSleep.Maximum = new decimal(new int[] {
+            2000000,
+            0,
+            0,
+            0});
+			this.nProducerSleep.Name = "nProducerSleep";
+			this.nProducerSleep.Size = new System.Drawing.Size(100, 20);
+			this.nProducerSleep.TabIndex = 15;
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -327,12 +356,19 @@
 			this.Name = "Main";
 			this.Text = "Consumer Monitor";
 			this.tabControl1.ResumeLayout(false);
-			this.tbpInit.ResumeLayout(false);
+			this.tpSettings.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.tabPage1.ResumeLayout(false);
+			this.tpResults.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nClients)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nProducers)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nBufferSize)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nPort)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nConsumerSleep)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nWordCount)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nProducerSleep)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -340,33 +376,33 @@
 		#endregion
 
 		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tbpInit;
-		private System.Windows.Forms.TextBox txtbxProducers;
+		private System.Windows.Forms.TabPage tpSettings;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox txtbxClients;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox txtbxBufferSize;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox txtbxConsumerSleep;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox txtbxWordCount;
 		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.TextBox txtbxProducerSleep;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.TextBox txtbxBaseUrl;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.TextBox txtbxPort;
 		private System.Windows.Forms.Button cmdTestConnection;
 		private System.Windows.Forms.Button cmdSendSettings;
-		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.TabPage tpResults;
 		private System.Windows.Forms.ListView listView1;
 		private System.Windows.Forms.ColumnHeader colThreadName;
 		private System.Windows.Forms.ColumnHeader colActive;
 		private System.Windows.Forms.ColumnHeader colSentence;
 		private System.ComponentModel.BackgroundWorker bkWorker;
+		private System.Windows.Forms.NumericUpDown nProducerSleep;
+		private System.Windows.Forms.NumericUpDown nWordCount;
+		private System.Windows.Forms.NumericUpDown nConsumerSleep;
+		private System.Windows.Forms.NumericUpDown nPort;
+		private System.Windows.Forms.NumericUpDown nBufferSize;
+		private System.Windows.Forms.NumericUpDown nProducers;
+		private System.Windows.Forms.NumericUpDown nClients;
 	}
 }
 
