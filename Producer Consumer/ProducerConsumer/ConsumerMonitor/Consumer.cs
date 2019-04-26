@@ -14,7 +14,21 @@ namespace ConsumerMonitor
 		private int _consumerSleepNum { get; set; }
 		private Http _httpConnection { get; set; }
 		private List<string> _wordFound { get; }
-		
+
+		public string Sentence
+		{
+			get
+			{
+				StringWriter writer = new StringWriter(new StringBuilder());
+				foreach (var word in _wordFound)
+				{
+					writer.Write(word + " ");
+				}
+				writer.Write(".");
+				return writer.ToString();
+			}
+		}
+
 		//Key: Hash, key: word
 		private Dictionary<string, string> _englishList { get; set; }
 
@@ -28,7 +42,7 @@ namespace ConsumerMonitor
 
 		private void GetEnglish(string url)
 		{
-			var file = File.OpenText(url).ReadToEnd();
+			var file = File.OpenText(url).ReadToEnd().ToLower();
 			var words = file.Split('\r', '\n');
 			var hash = words.ToHashSet().ToList();
 
@@ -44,7 +58,7 @@ namespace ConsumerMonitor
 
 			while (true)
 			{
-				string data = _httpConnection.Get();
+				string data = _httpConnection.Get().ToLower();
 				if (data == null || data == "")
 				{
 					Thread.Sleep(_consumerSleepNum * 2);
