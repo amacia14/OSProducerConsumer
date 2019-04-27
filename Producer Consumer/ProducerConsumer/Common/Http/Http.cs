@@ -41,19 +41,29 @@ namespace Common
 		/// <returns>HttpStatusCode</returns>
 		private  HttpStatusCode Post(Settings data, string url)
 	    {
-			var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+			var httpWebRequest = WebRequest.Create(url) as HttpWebRequest;
+			httpWebRequest.KeepAlive = true;
+			httpWebRequest.Method = "POST";
+		    var stream = Json.Serialize(data, httpWebRequest.GetRequestStream());
 		    httpWebRequest.ContentType = "application/json";
-		    httpWebRequest.Method = "POST";
-
-			var stream = Json.Serialize(data, httpWebRequest.GetRequestStream());
 
 			stream.Flush();
 
-		    WebResponse response = httpWebRequest.GetResponse();
+			try
+			{
 
-			var result = (HttpStatusCode)Json.DeSerialize(response.GetResponseStream());
+				WebResponse response = httpWebRequest.GetResponse();
 
-			return result;
+				var result = (HttpStatusCode) Json.DeSerialize<object>(response.GetResponseStream());
+
+				return result;
+			}
+			catch
+			{
+				return HttpStatusCode.BadRequest;
+			}
+
+
 	    }
 		#endregion
 
@@ -80,7 +90,7 @@ namespace Common
 			if (httpReponse.StatusCode != HttpStatusCode.OK)
 				return null;
 			else
-				return (string)Json.DeSerialize(httpReponse.GetResponseStream());
+				return Json.DeSerialize<string>(httpReponse.GetResponseStream());
 		}
 		#endregion
 
@@ -95,7 +105,7 @@ namespace Common
 		{
 			var httpRequest = WebRequest.Create(_baseUrl + url);
 			httpRequest.ContentType = "text/plain";
-			httpRequest.Method = "TEST";
+			httpRequest.Method = "GET";
 
 			try
 			{
@@ -106,8 +116,10 @@ namespace Common
 				else
 					return false;
 			}
-			catch
+			catch(Exception e)
 			{
+				var x = e.Message;
+
 				return false;
 			}
 		}
