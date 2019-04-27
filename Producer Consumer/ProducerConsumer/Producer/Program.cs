@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,26 @@ namespace Producer
 			} 
 			
 		}
+
+		public static string randomString(int length)
+		{
+			char[] alpha = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+			Random r = new Random();
+			var charString = "";
+			for (int i = 0; i < length; i++)
+			{
+				if (i % 8 == 0)
+				{
+					charString += " ";
+				}
+
+				charString += alpha[r.Next(0, 25)].ToString();
+			}
+			Console.WriteLine(charString);
+			return charString;
+		}
+		
+		
 		/// <summary>
 		/// this methods will write set up the writestram to  guid.txt file
 		/// </summary>
@@ -52,11 +73,14 @@ namespace Producer
 			for (int wordNumber = 0; wordCount < wordCount; wordNumber++)
 			{ 
 				string input = "LOVE YOU TOO";
-				//Algorithm for random word
+				int count = 0;
 
+				//Algorithm for random word-
+				//
+		
+						
 				writer.Write(input);
 			}
-			
 			stream.Flush();
 		}
 	}
