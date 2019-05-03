@@ -19,7 +19,7 @@ namespace Producer
 			_buffer = buffer;
 		}
 		
-		public void producer(int wordCount, int sleepCount)
+		public void Produce(int wordCount, int sleepCount)
 		{
 			while(true)
 			{

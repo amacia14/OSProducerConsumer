@@ -33,7 +33,7 @@ namespace ConsumerMonitor
 		private WorkerClient _Producer { get; set; }
 		private List<string> _wordFound { get; }
 		private object locker = new object();
-
+		private List<string> _englishList { get; set; }
 		public string Sentence
 		{
 			get
@@ -48,8 +48,7 @@ namespace ConsumerMonitor
 			}
 		}
 
-		//Key: Hash, key: word
-		private Dictionary<string, string> _englishList { get; set; }
+
 
 		public Consumer(int consumerSleepNum, WorkerClient connection)
 		{
@@ -63,18 +62,10 @@ namespace ConsumerMonitor
 		{
 			var directory = System.IO.Directory.GetCurrentDirectory() + "\\";
 			var file = File.OpenText(directory + url).ReadToEnd().ToLower();
-			var words = file.Split('\r', '\n').ToList();
+			var words = file.Split('\n').ToList();
 			words.Sort();
-
-			_englishList = new Dictionary<string, string>();
-			for (int i = 0; i < words.Count; i++)
-			{
-				try
-				{
-					_englishList.Add(words[i], words[i]);
-				}
-				catch{ }
-			}
+			
+			_englishList = new List<string>(words);
 		}
 
 		public void Consume()
@@ -94,21 +85,22 @@ namespace ConsumerMonitor
 						Thread.Sleep(_consumerSleepNum * 2);
 						continue;
 					}
-					if (data == null || data.Length == 0)
+					if (data == null || data.Length == 0 || data.Equals(""))
 					{
 						Thread.Sleep(_consumerSleepNum * 2);
 						continue;
 					}
 
 					data = data.ToLower();
-					var words = data.Split(' ').ToList();
-
+					var words = data.Split(' ').Where(x => x.Length > 0).Where(x => !String.Equals(x, "")).ToList();
+					
 					foreach (var word in words)
 					{
 						try
 						{
-							if(_englishList.ContainsKey(word))
-								_wordFound.Add(_englishList[word]);
+							var item = _englishList.Where(s => String.Equals(s, word)).ToList();
+							if(item.Count == 1)
+								_wordFound.Add(word);
 						}
 						catch{}
 					}

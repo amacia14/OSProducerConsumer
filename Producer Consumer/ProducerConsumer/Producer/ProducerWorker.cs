@@ -76,7 +76,7 @@ namespace Producer
 			} 
 		}
 		
-		private const string alpha = "abcdefghijklmnopqrstuvwxyz";
+		private const string characters = "abcdefghijklmnopqrstuvwxyz";
 		private string RandomString()
 		{
 			RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
@@ -93,7 +93,7 @@ namespace Producer
 			var charString = "";
 			for (int i = 0; i < length; i++)
 			{
-				charString += alpha[data[i] % alpha.Length].ToString();
+				charString += characters[data[i] % characters.Length].ToString();
 			}
 
 			charString += ' ';

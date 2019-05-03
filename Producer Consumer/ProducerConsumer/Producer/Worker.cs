@@ -41,7 +41,7 @@ namespace Producer
 		}
 
 		public string Get()
-		{
+			{
 			if (_worker._buffer == null)
 				return null;
 
@@ -53,7 +53,7 @@ namespace Producer
 
 			var fileStream = File.Open(url, FileMode.Open);
 			var item = (new StreamReader(fileStream)).ReadToEnd();
-			fileStream.Close();fileStream.Dispose();
+			fileStream.Close(); fileStream.Dispose();
 			File.Delete(url);
 			return item;
 		}
@@ -140,7 +140,7 @@ namespace Producer
 				}
 			}
 
-			for(int i = 0; i < _threadManager.CurrentCount; i++)
+			for (int i = 0; i < _threadManager.CurrentCount; i++)
 			{
 				_threadManager.KillThread();
 			}

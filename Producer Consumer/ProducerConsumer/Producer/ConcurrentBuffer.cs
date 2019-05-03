@@ -11,7 +11,6 @@ namespace Producer
 		private System.Collections.Concurrent.IProducerConsumerCollection<string> _buffer;
 
 		private Semaphore _available;
-		private List<Guid> _spots;
 		private Semaphore _items;
 		public int Size;
 		private object _object;
@@ -25,7 +24,6 @@ namespace Producer
 			_available = new Semaphore(size, size);
 			_items = new Semaphore(0, size);
 			switching = false;
-			_spots = new List<Guid>();
 			_object = new object();
 		}
 
