@@ -25,7 +25,25 @@ namespace Common
 			this.ConsumersleepNum = consumerSleep;
 			this.ProducerWordCount = producerWord;
 			this.ProducerSleepNum = producerSleep;
+		}
 
+		public Settings()
+		{
+		}
+
+		public bool Equals(Settings newSettings)
+		{
+			if (this.NumOfProducers == newSettings.NumOfProducers
+			    && this.NumOfClients == newSettings.NumOfClients
+			    && this.BufferSize == newSettings.BufferSize
+			    && this.ProducerSleepNum == newSettings.ProducerSleepNum
+			    && this.ProducerWordCount == newSettings.ProducerWordCount
+			    && this.ConsumersleepNum == newSettings.ConsumersleepNum)
+				return true;
+			else
+			{
+				return false;
+			}
 		}
     }
    

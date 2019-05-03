@@ -29,53 +29,65 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpSettings = new System.Windows.Forms.TabPage();
 			this.cmdSendSettings = new System.Windows.Forms.Button();
 			this.cmdTestConnection = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.nProducerSleep = new System.Windows.Forms.NumericUpDown();
+			this.nWordCount = new System.Windows.Forms.NumericUpDown();
+			this.nConsumerSleep = new System.Windows.Forms.NumericUpDown();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.label8 = new System.Windows.Forms.Label();
-			this.txtbxBaseUrl = new System.Windows.Forms.TextBox();
-			this.label7 = new System.Windows.Forms.Label();
+			this.nBufferSize = new System.Windows.Forms.NumericUpDown();
+			this.nProducers = new System.Windows.Forms.NumericUpDown();
+			this.nClients = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.tpResults = new System.Windows.Forms.TabPage();
-			this.listView1 = new System.Windows.Forms.ListView();
+			this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.lvThreads = new System.Windows.Forms.ListView();
 			this.colThreadName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colSentence = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.cmdRefresh = new System.Windows.Forms.Button();
+			this.tbProducer = new System.Windows.Forms.TabPage();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.lblBufferCount = new System.Windows.Forms.Label();
+			this.lblBufferSize = new System.Windows.Forms.Label();
+			this.lblThreads = new System.Windows.Forms.Label();
+			this.cmdProducerFetch = new System.Windows.Forms.Button();
 			this.bkWorker = new System.ComponentModel.BackgroundWorker();
-			this.nClients = new System.Windows.Forms.NumericUpDown();
-			this.nProducers = new System.Windows.Forms.NumericUpDown();
-			this.nBufferSize = new System.Windows.Forms.NumericUpDown();
-			this.nPort = new System.Windows.Forms.NumericUpDown();
-			this.nConsumerSleep = new System.Windows.Forms.NumericUpDown();
-			this.nWordCount = new System.Windows.Forms.NumericUpDown();
-			this.nProducerSleep = new System.Windows.Forms.NumericUpDown();
+			this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.consumerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.cmdreset = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tpSettings.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.groupBox1.SuspendLayout();
-			this.tpResults.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nClients)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nProducers)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nBufferSize)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nPort)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nConsumerSleep)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nWordCount)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nProducerSleep)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nWordCount)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nConsumerSleep)).BeginInit();
+			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nBufferSize)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nProducers)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nClients)).BeginInit();
+			this.tpResults.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
+			this.tbProducer.SuspendLayout();
+			this.groupBox3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.consumerBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.tpSettings);
 			this.tabControl1.Controls.Add(this.tpResults);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl1.Controls.Add(this.tbProducer);
 			this.tabControl1.Location = new System.Drawing.Point(0, 0);
 			this.tabControl1.MinimumSize = new System.Drawing.Size(344, 384);
 			this.tabControl1.Name = "tabControl1";
@@ -85,6 +97,7 @@
 			// 
 			// tpSettings
 			// 
+			this.tpSettings.Controls.Add(this.cmdreset);
 			this.tpSettings.Controls.Add(this.cmdSendSettings);
 			this.tpSettings.Controls.Add(this.cmdTestConnection);
 			this.tpSettings.Controls.Add(this.groupBox2);
@@ -132,6 +145,42 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Optional";
 			// 
+			// nProducerSleep
+			// 
+			this.nProducerSleep.Location = new System.Drawing.Point(150, 78);
+			this.nProducerSleep.Maximum = new decimal(new int[] {
+            2000000,
+            0,
+            0,
+            0});
+			this.nProducerSleep.Name = "nProducerSleep";
+			this.nProducerSleep.Size = new System.Drawing.Size(100, 20);
+			this.nProducerSleep.TabIndex = 15;
+			// 
+			// nWordCount
+			// 
+			this.nWordCount.Location = new System.Drawing.Point(150, 48);
+			this.nWordCount.Maximum = new decimal(new int[] {
+            5800,
+            0,
+            0,
+            0});
+			this.nWordCount.Name = "nWordCount";
+			this.nWordCount.Size = new System.Drawing.Size(100, 20);
+			this.nWordCount.TabIndex = 14;
+			// 
+			// nConsumerSleep
+			// 
+			this.nConsumerSleep.Location = new System.Drawing.Point(150, 17);
+			this.nConsumerSleep.Maximum = new decimal(new int[] {
+            2000000,
+            0,
+            0,
+            0});
+			this.nConsumerSleep.Name = "nConsumerSleep";
+			this.nConsumerSleep.Size = new System.Drawing.Size(100, 20);
+			this.nConsumerSleep.TabIndex = 13;
+			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
@@ -161,48 +210,44 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.nPort);
 			this.groupBox1.Controls.Add(this.nBufferSize);
 			this.groupBox1.Controls.Add(this.nProducers);
 			this.groupBox1.Controls.Add(this.nClients);
-			this.groupBox1.Controls.Add(this.label8);
-			this.groupBox1.Controls.Add(this.txtbxBaseUrl);
-			this.groupBox1.Controls.Add(this.label7);
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Location = new System.Drawing.Point(3, 6);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(274, 156);
+			this.groupBox1.Size = new System.Drawing.Size(274, 101);
 			this.groupBox1.TabIndex = 7;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Mandatory";
 			// 
-			// label8
+			// nBufferSize
 			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(6, 126);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(73, 13);
-			this.label8.TabIndex = 8;
-			this.label8.Text = "* Port Number";
+			this.nBufferSize.Location = new System.Drawing.Point(155, 73);
+			this.nBufferSize.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.nBufferSize.Name = "nBufferSize";
+			this.nBufferSize.Size = new System.Drawing.Size(100, 20);
+			this.nBufferSize.TabIndex = 11;
 			// 
-			// txtbxBaseUrl
+			// nProducers
 			// 
-			this.txtbxBaseUrl.Location = new System.Drawing.Point(155, 98);
-			this.txtbxBaseUrl.Name = "txtbxBaseUrl";
-			this.txtbxBaseUrl.Size = new System.Drawing.Size(100, 20);
-			this.txtbxBaseUrl.TabIndex = 7;
-			this.txtbxBaseUrl.Text = "localhost";
+			this.nProducers.Location = new System.Drawing.Point(155, 46);
+			this.nProducers.Name = "nProducers";
+			this.nProducers.Size = new System.Drawing.Size(100, 20);
+			this.nProducers.TabIndex = 10;
 			// 
-			// label7
+			// nClients
 			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(5, 101);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(109, 13);
-			this.label7.TabIndex = 6;
-			this.label7.Text = "* Producer host name";
+			this.nClients.Location = new System.Drawing.Point(155, 17);
+			this.nClients.Name = "nClients";
+			this.nClients.Size = new System.Drawing.Size(100, 20);
+			this.nClients.TabIndex = 9;
 			// 
 			// label1
 			// 
@@ -233,7 +278,8 @@
 			// 
 			// tpResults
 			// 
-			this.tpResults.Controls.Add(this.listView1);
+			this.tpResults.Controls.Add(this.lvThreads);
+			this.tpResults.Controls.Add(this.cmdRefresh);
 			this.tpResults.Location = new System.Drawing.Point(4, 22);
 			this.tpResults.Name = "tpResults";
 			this.tpResults.Padding = new System.Windows.Forms.Padding(3);
@@ -242,23 +288,28 @@
 			this.tpResults.Text = "Results";
 			this.tpResults.UseVisualStyleBackColor = true;
 			// 
-			// listView1
+			// mainBindingSource
 			// 
-			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.mainBindingSource.DataSource = typeof(ConsumerMonitor.Main);
+			// 
+			// lvThreads
+			// 
+			this.lvThreads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colThreadName,
             this.colActive,
             this.colSentence});
-			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView1.Location = new System.Drawing.Point(3, 3);
-			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(330, 352);
-			this.listView1.TabIndex = 0;
-			this.listView1.UseCompatibleStateImageBehavior = false;
-			this.listView1.View = System.Windows.Forms.View.Details;
+			this.lvThreads.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvThreads.Location = new System.Drawing.Point(3, 26);
+			this.lvThreads.Name = "lvThreads";
+			this.lvThreads.Size = new System.Drawing.Size(330, 329);
+			this.lvThreads.TabIndex = 0;
+			this.lvThreads.UseCompatibleStateImageBehavior = false;
+			this.lvThreads.View = System.Windows.Forms.View.Details;
 			// 
 			// colThreadName
 			// 
 			this.colThreadName.Text = "Thread name";
+			this.colThreadName.Width = 84;
 			// 
 			// colActive
 			// 
@@ -268,84 +319,102 @@
 			// colSentence
 			// 
 			this.colSentence.Text = "Sentence";
+			this.colSentence.Width = 187;
+			// 
+			// cmdRefresh
+			// 
+			this.cmdRefresh.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cmdRefresh.Location = new System.Drawing.Point(3, 3);
+			this.cmdRefresh.Name = "cmdRefresh";
+			this.cmdRefresh.Size = new System.Drawing.Size(330, 23);
+			this.cmdRefresh.TabIndex = 1;
+			this.cmdRefresh.Text = "Refresh";
+			this.cmdRefresh.UseVisualStyleBackColor = true;
+			this.cmdRefresh.Click += new System.EventHandler(this.cmdRefresh_Click);
+			// 
+			// tbProducer
+			// 
+			this.tbProducer.Controls.Add(this.groupBox3);
+			this.tbProducer.Controls.Add(this.cmdProducerFetch);
+			this.tbProducer.Location = new System.Drawing.Point(4, 22);
+			this.tbProducer.Name = "tbProducer";
+			this.tbProducer.Padding = new System.Windows.Forms.Padding(3);
+			this.tbProducer.Size = new System.Drawing.Size(336, 358);
+			this.tbProducer.TabIndex = 3;
+			this.tbProducer.Text = "Producer";
+			this.tbProducer.UseVisualStyleBackColor = true;
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.lblBufferCount);
+			this.groupBox3.Controls.Add(this.lblBufferSize);
+			this.groupBox3.Controls.Add(this.lblThreads);
+			this.groupBox3.Location = new System.Drawing.Point(8, 42);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(306, 218);
+			this.groupBox3.TabIndex = 4;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Producer\'s resources";
+			// 
+			// lblBufferCount
+			// 
+			this.lblBufferCount.AutoSize = true;
+			this.lblBufferCount.Location = new System.Drawing.Point(6, 62);
+			this.lblBufferCount.Name = "lblBufferCount";
+			this.lblBufferCount.Size = new System.Drawing.Size(69, 13);
+			this.lblBufferCount.TabIndex = 7;
+			this.lblBufferCount.Text = "Buffer Count:";
+			// 
+			// lblBufferSize
+			// 
+			this.lblBufferSize.AutoSize = true;
+			this.lblBufferSize.Location = new System.Drawing.Point(6, 39);
+			this.lblBufferSize.Name = "lblBufferSize";
+			this.lblBufferSize.Size = new System.Drawing.Size(59, 13);
+			this.lblBufferSize.TabIndex = 6;
+			this.lblBufferSize.Text = "Buffer size:";
+			// 
+			// lblThreads
+			// 
+			this.lblThreads.AutoSize = true;
+			this.lblThreads.Location = new System.Drawing.Point(6, 16);
+			this.lblThreads.Name = "lblThreads";
+			this.lblThreads.Size = new System.Drawing.Size(67, 13);
+			this.lblThreads.TabIndex = 5;
+			this.lblThreads.Text = "# of threads:";
+			// 
+			// cmdProducerFetch
+			// 
+			this.cmdProducerFetch.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cmdProducerFetch.Location = new System.Drawing.Point(3, 3);
+			this.cmdProducerFetch.Name = "cmdProducerFetch";
+			this.cmdProducerFetch.Size = new System.Drawing.Size(330, 23);
+			this.cmdProducerFetch.TabIndex = 3;
+			this.cmdProducerFetch.Text = "Refresh";
+			this.cmdProducerFetch.UseVisualStyleBackColor = true;
+			this.cmdProducerFetch.Click += new System.EventHandler(this.cmdProducerFetch_Click);
 			// 
 			// bkWorker
 			// 
 			this.bkWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bkWorker_DoWork);
 			// 
-			// nClients
+			// settingsBindingSource
 			// 
-			this.nClients.Location = new System.Drawing.Point(155, 17);
-			this.nClients.Name = "nClients";
-			this.nClients.Size = new System.Drawing.Size(100, 20);
-			this.nClients.TabIndex = 9;
+			this.settingsBindingSource.DataSource = typeof(Common.Settings);
 			// 
-			// nProducers
+			// consumerBindingSource
 			// 
-			this.nProducers.Location = new System.Drawing.Point(155, 46);
-			this.nProducers.Name = "nProducers";
-			this.nProducers.Size = new System.Drawing.Size(100, 20);
-			this.nProducers.TabIndex = 10;
+			this.consumerBindingSource.DataSource = typeof(ConsumerMonitor.Consumer);
 			// 
-			// nBufferSize
+			// cmdreset
 			// 
-			this.nBufferSize.Location = new System.Drawing.Point(155, 73);
-			this.nBufferSize.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-			this.nBufferSize.Name = "nBufferSize";
-			this.nBufferSize.Size = new System.Drawing.Size(100, 20);
-			this.nBufferSize.TabIndex = 11;
-			// 
-			// nPort
-			// 
-			this.nPort.Location = new System.Drawing.Point(155, 124);
-			this.nPort.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-			this.nPort.Name = "nPort";
-			this.nPort.Size = new System.Drawing.Size(100, 20);
-			this.nPort.TabIndex = 12;
-			// 
-			// nConsumerSleep
-			// 
-			this.nConsumerSleep.Location = new System.Drawing.Point(150, 17);
-			this.nConsumerSleep.Maximum = new decimal(new int[] {
-            2000000,
-            0,
-            0,
-            0});
-			this.nConsumerSleep.Name = "nConsumerSleep";
-			this.nConsumerSleep.Size = new System.Drawing.Size(100, 20);
-			this.nConsumerSleep.TabIndex = 13;
-			// 
-			// nWordCount
-			// 
-			this.nWordCount.Location = new System.Drawing.Point(150, 48);
-			this.nWordCount.Maximum = new decimal(new int[] {
-            2000000,
-            0,
-            0,
-            0});
-			this.nWordCount.Name = "nWordCount";
-			this.nWordCount.Size = new System.Drawing.Size(100, 20);
-			this.nWordCount.TabIndex = 14;
-			// 
-			// nProducerSleep
-			// 
-			this.nProducerSleep.Location = new System.Drawing.Point(150, 78);
-			this.nProducerSleep.Maximum = new decimal(new int[] {
-            2000000,
-            0,
-            0,
-            0});
-			this.nProducerSleep.Name = "nProducerSleep";
-			this.nProducerSleep.Size = new System.Drawing.Size(100, 20);
-			this.nProducerSleep.TabIndex = 15;
+			this.cmdreset.Location = new System.Drawing.Point(116, 313);
+			this.cmdreset.Name = "cmdreset";
+			this.cmdreset.Size = new System.Drawing.Size(75, 23);
+			this.cmdreset.TabIndex = 10;
+			this.cmdreset.Text = "Reset";
+			this.cmdreset.UseVisualStyleBackColor = true;
+			this.cmdreset.Click += new System.EventHandler(this.cmdreset_Click);
 			// 
 			// Main
 			// 
@@ -353,22 +422,30 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(344, 384);
 			this.Controls.Add(this.tabControl1);
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "Main";
+			this.ShowIcon = false;
 			this.Text = "Consumer Monitor";
 			this.tabControl1.ResumeLayout(false);
 			this.tpSettings.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nProducerSleep)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nWordCount)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nConsumerSleep)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.tpResults.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nClients)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nProducers)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nBufferSize)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nPort)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nConsumerSleep)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nWordCount)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nProducerSleep)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nProducers)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nClients)).EndInit();
+			this.tpResults.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
+			this.tbProducer.ResumeLayout(false);
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.consumerBindingSource)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -385,13 +462,10 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.TextBox txtbxBaseUrl;
-		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Button cmdTestConnection;
 		private System.Windows.Forms.Button cmdSendSettings;
 		private System.Windows.Forms.TabPage tpResults;
-		private System.Windows.Forms.ListView listView1;
+		private System.Windows.Forms.ListView lvThreads;
 		private System.Windows.Forms.ColumnHeader colThreadName;
 		private System.Windows.Forms.ColumnHeader colActive;
 		private System.Windows.Forms.ColumnHeader colSentence;
@@ -399,10 +473,20 @@
 		private System.Windows.Forms.NumericUpDown nProducerSleep;
 		private System.Windows.Forms.NumericUpDown nWordCount;
 		private System.Windows.Forms.NumericUpDown nConsumerSleep;
-		private System.Windows.Forms.NumericUpDown nPort;
 		private System.Windows.Forms.NumericUpDown nBufferSize;
 		private System.Windows.Forms.NumericUpDown nProducers;
 		private System.Windows.Forms.NumericUpDown nClients;
+		private System.Windows.Forms.Button cmdRefresh;
+		private System.Windows.Forms.TabPage tbProducer;
+		private System.Windows.Forms.Button cmdProducerFetch;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.Label lblBufferCount;
+		private System.Windows.Forms.Label lblBufferSize;
+		private System.Windows.Forms.Label lblThreads;
+		private System.Windows.Forms.BindingSource settingsBindingSource;
+		private System.Windows.Forms.BindingSource mainBindingSource;
+		private System.Windows.Forms.BindingSource consumerBindingSource;
+		private System.Windows.Forms.Button cmdreset;
 	}
 }
 

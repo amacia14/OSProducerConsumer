@@ -19,7 +19,7 @@ namespace Common
     public class Http
     {
 	    private string _baseUrl = "http://";
-	    private static string _producer = "Producer.ashx";
+	    private static string _producer = "Producer";
 		public static JsonSerializer _Serializer = JsonSerializer.Create();
 		
 		public Http (string baseUrl, int port)
@@ -52,14 +52,16 @@ namespace Common
 			try
 			{
 
-				WebResponse response = httpWebRequest.GetResponse();
+				var response = (HttpWebResponse)httpWebRequest.GetResponse();
 
-				var result = (HttpStatusCode) Json.DeSerialize<object>(response.GetResponseStream());
+
+				var result = response.StatusCode;
 
 				return result;
 			}
-			catch
+			catch(Exception e)
 			{
+				var what = e;
 				return HttpStatusCode.BadRequest;
 			}
 
@@ -83,14 +85,21 @@ namespace Common
 			var httpRequest = WebRequest.Create(_baseUrl + url);
 			httpRequest.ContentType = "application/json";
 			httpRequest.Method = "GET";
-			
 
-			var httpReponse = (HttpWebResponse) httpRequest.GetResponse();
+			try
+			{
+				var httpReponse = (HttpWebResponse)httpRequest.GetResponse();
 
-			if (httpReponse.StatusCode != HttpStatusCode.OK)
+				if (httpReponse.StatusCode != HttpStatusCode.OK)
+					return null;
+				else
+					return Json.DeSerialize<string>(httpReponse.GetResponseStream());
+
+			}
+			catch (Exception e)
+			{
 				return null;
-			else
-				return Json.DeSerialize<string>(httpReponse.GetResponseStream());
+			}
 		}
 		#endregion
 

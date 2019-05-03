@@ -43,7 +43,7 @@ namespace Producer
 			
 		}
 
-		public static string randomString(int length)
+		public string randomString(int length)
 		{
 			char[] alpha = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 			Random r = new Random();

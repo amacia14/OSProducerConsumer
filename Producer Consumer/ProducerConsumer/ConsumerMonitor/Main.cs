@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common;
+using ConsumerMonitor.ProducerWCF;
 
 namespace ConsumerMonitor
 {
@@ -18,12 +19,13 @@ namespace ConsumerMonitor
 		public Main()
 		{
 			InitializeComponent();
-			_threads = new List<Thread>(1);
+			_ThreadManager = new ThreadManager<Consumer>();
 		}
 
-		private Http _httpConnection;
-		private List<Thread> _threads;
+		public Common.ThreadManager<Consumer> _ThreadManager;
 		private Settings _settings;
+
+		private WorkerClient _Client;
 
 		#region Settings
 		private void cmdSendSettings_Click(object sender, EventArgs e)
@@ -33,6 +35,8 @@ namespace ConsumerMonitor
 
 		private void sendSettings()
 		{
+			//Check settings if valid
+			Settings newSettings;
 			try
 			{
 				int clients = Convert.ToInt32(nClients.Value);
@@ -41,7 +45,7 @@ namespace ConsumerMonitor
 				int ConsumerSleep = Convert.ToInt32(nConsumerSleep.Value);
 				int producerSleep = Convert.ToInt32(nProducerSleep.Value);
 				int word = Convert.ToInt32(nWordCount.Value);
-				_settings = new Settings(clients, producer, bufferSize, ConsumerSleep, word, producerSleep);
+				newSettings = new Settings(clients, producer, bufferSize, ConsumerSleep, word, producerSleep);
 			}
 			catch (Exception e)
 			{
@@ -49,26 +53,46 @@ namespace ConsumerMonitor
 				return;
 			}
 
-			if (_httpConnection != null)
+			try
 			{
-				var result = _httpConnection.Post(_settings);
+				_Client = new WorkerClient();
+				var result = _Client.Post(newSettings);
 				if (result == HttpStatusCode.OK)
 				{
-					MessageBox.Show("Setting posted successfully");
-					CheckSettings();
-
 					tpSettings.Name = "Settings";
+					_settings = newSettings;
+					bkWorker.RunWorkerAsync();
+					MessageBox.Show("Setting posted successfully");
 				}
 				else
 					MessageBox.Show("Setting NOT successful.");
 			}
-			else
+			catch(Exception e)
 			{
-				cmdTestConnection_Click(null, null);
+				MessageBox.Show("Setting not successful for some reason.  Probably Service is not active");
 			}
+			////Check http connection
+			//if (_httpConnection == null)
+			//{
+			//	if (!test(txtbxBaseUrl.Text, Convert.ToInt32(nPort.Value)))
+			//	{
+			//		MessageBox.Show("Server not found");
+			//		return;
+			//	}
+			//}
 
+			//var result = _httpConnection.Post(newSettings);
+			//if (result == HttpStatusCode.OK)
+			//{
+			//	MessageBox.Show("Setting posted successfully");
+
+			//	tpSettings.Name = "Settings";
+			//	_settings = newSettings;
+			//	bkWorker.RunWorkerAsync();
+			//}
+			//else
+			//	MessageBox.Show("Setting NOT successful.");
 		}
-
 		#endregion
 
 
@@ -76,57 +100,134 @@ namespace ConsumerMonitor
 		#region Test Connection
 		private void cmdTestConnection_Click(object sender, EventArgs e)
 		{
-			var test = this.test(txtbxBaseUrl.Text, Convert.ToInt32(nPort.Value));
-			if (test)
-				MessageBox.Show("Found correct server");
-			else
+			try
 			{
-				MessageBox.Show("Incorrect server");
-				_httpConnection = null;
+				WorkerClient client = new WorkerClient();
+				if (client.Test())
+					MessageBox.Show("Found service");
+				else
+				{
+					MessageBox.Show("Service not found");
+				}
 			}
+			catch (Exception exception)
+			{
+				MessageBox.Show("Service not found");
+			}
+
+			#region  deadcode
+
+			//var test = this.test(txtbxBaseUrl.Text, Convert.ToInt32(nPort.Value));
+			//if (test)
+			//	MessageBox.Show("Found correct server");
+			//else
+			//{
+			//	MessageBox.Show("Incorrect server");
+			//	_httpConnection = null;
+			//}
+
+			#endregion
+
 		}
 
-		private bool test(string url, int port)
-		{
-			_httpConnection = new Http(url, port);
+		#region deadCode
+		//private bool test(string url, int port)
+		//{
+		//	_httpConnection = new Http(url, port);
 
-			if (_httpConnection.TestConnection())
-				return true;
-			else
-				return false;
-		}
-
-		private bool testWithCurrent()
-		{
-			if (_httpConnection.TestConnection())
-				return true;
-			else
-				return false;
-		}
+		//	if (_httpConnection.TestConnection())
+		//		return true;
+		//	else
+		//		return false;
+		//}
+		//private bool testWithCurrent()
+		//{
+		//	if (_httpConnection.TestConnection())
+		//		return true;
+		//	else
+		//		return false;
+		//}
+		#endregion
 
 		#endregion
 
 		private void bkWorker_DoWork(object sender, DoWorkEventArgs e)
 		{
-			
+			CheckSettings();
 		}
 
 		private void CheckSettings()
 		{
-			if (_settings.NumOfClients > _threads.Count)
+			//Number of Clients
+			while (_settings.NumOfClients > _ThreadManager.CurrentCount)
 			{
-				while (_settings.NumOfClients > _threads.Count)
+				WorkerClient client = new WorkerClient();
+				Consumer consumer = new Consumer(_settings.ConsumersleepNum, client);
+
+				Thread thread = new Thread(consumer.Consume)
 				{
-					Task.Run(() =>
-					{
-						//TODO: Assign producer method to the thread with a delegate
-						//Send a method to update number of words
-						//Send a method to update producer sleep
-						//Thread thread = new Thread();
-					});
-				}
+					Name = "consumer " + Guid.NewGuid().ToString(),
+					IsBackground = false
+				};
+				thread.SetApartmentState(ApartmentState.MTA);
+
+				_ThreadManager.AddThread(thread, consumer);
+
+				thread.Start();
 			}
 
+			while (_settings.NumOfClients < _ThreadManager.CurrentCount)
+			{
+				_ThreadManager.KillThread();
+			}
+
+			//Consumer Sleep time
+			if (_ThreadManager.CurrentCount != 0 && _settings.ConsumersleepNum != _ThreadManager.GetRunningThreads()[0].Item2._consumerSleepNum)
+			{
+				foreach (var item in _ThreadManager.GetRunningThreads())
+				{
+					item.Item2._consumerSleepNum = _settings.ConsumersleepNum;
+				}
+			}
+		}
+
+		private void cmdRefresh_Click(object sender, EventArgs e)
+		{
+			lvThreads.Items.Clear();
+			foreach (var item in _ThreadManager.GetRunningThreads())
+			{
+				ListViewItem listItem = new ListViewItem(item.Item1.Name);
+				listItem.SubItems.Add(Enum.GetName(typeof(ThreadState), item.Item1.ThreadState));
+				listItem.SubItems.Add(item.Item2.Sentence);
+
+				lvThreads.Items.Add(listItem);
+			}
+
+			foreach(var item in _ThreadManager.GetRunningThreads())
+			{
+				ListViewItem listItem = new ListViewItem(item.Item1.Name);
+				listItem.SubItems.Add(Enum.GetName(typeof(ThreadState), item.Item1.ThreadState));
+				listItem.SubItems.Add(item.Item2.Sentence);
+
+				lvThreads.Items.Add(listItem);
+			}
+			
+		}
+
+		private void cmdProducerFetch_Click(object sender, EventArgs e)
+		{
+			var bufferItems = _Client.BufferItems();
+			var settings = _Client.CurrentSettings();
+
+			lblThreads.Text = "Number of threads: " + settings.NumOfProducers;
+			lblBufferSize.Text = "Buffer Size: " + settings.BufferSize;
+			lblBufferCount.Text = "Buffer Count: " + bufferItems.Count;
+
+		}
+
+		private void cmdreset_Click(object sender, EventArgs e)
+		{
+			_Client.Reset();
 		}
 	}
 }

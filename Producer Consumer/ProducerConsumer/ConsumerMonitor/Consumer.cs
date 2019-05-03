@@ -1,26 +1,45 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Common;
+using ConsumerMonitor.ProducerWCF;
 
 namespace ConsumerMonitor
 {
 	public class Consumer
 	{
-		private int _consumerSleepNum { get; set; }
-		private Http _httpConnection { get; set; }
+		public int _consumerSleepNum { get; set; }
+		private bool _stop { get; set; }
+		public bool Stop
+		{
+			get { return _stop; }
+			set
+			{
+				lock (locker)
+				{
+					_stop = value;
+				}
+			}
+		}
+
+		private WorkerClient _Producer { get; set; }
 		private List<string> _wordFound { get; }
+		private object locker = new object();
 
 		public string Sentence
 		{
 			get
 			{
 				StringWriter writer = new StringWriter(new StringBuilder());
-				foreach (var word in _wordFound)
+				foreach (var word in _wordFound.ToArray())
 				{
 					writer.Write(word + " ");
 				}
@@ -32,45 +51,75 @@ namespace ConsumerMonitor
 		//Key: Hash, key: word
 		private Dictionary<string, string> _englishList { get; set; }
 
-		public Consumer(int consumerSleepNum, Http connection)
+		public Consumer(int consumerSleepNum, WorkerClient connection)
 		{
 			this._consumerSleepNum = consumerSleepNum;
-			_httpConnection = connection;
-			_englishList = new Dictionary<string, string>();
+			_Producer = connection;
 			_wordFound = new List<string>();
+			Stop = false;
 		}
 
 		private void GetEnglish(string url)
 		{
-			var file = File.OpenText(url).ReadToEnd().ToLower();
-			var words = file.Split('\r', '\n');
-			var hash = words.ToHashSet().ToList();
+			var directory = System.IO.Directory.GetCurrentDirectory() + "\\";
+			var file = File.OpenText(directory + url).ReadToEnd().ToLower();
+			var words = file.Split('\r', '\n').ToList();
+			words.Sort();
 
-			for(int i = 0; i < words.Length; i++)
+			_englishList = new Dictionary<string, string>();
+			for (int i = 0; i < words.Count; i++)
 			{
-				_englishList.Add(hash[i], words[i]);
+				try
+				{
+					_englishList.Add(words[i], words[i]);
+				}
+				catch{ }
 			}
 		}
 
 		public void Consume()
 		{
-			GetEnglish("~/words.txt");
-
-			while (true)
+			GetEnglish("words.txt");
+			while (!_stop)
 			{
-				string data = _httpConnection.Get().ToLower();
-				if (data == null || data == "")
+				try
 				{
-					Thread.Sleep(_consumerSleepNum * 2);
-					continue;
+					string data = null;
+					try
+					{
+						data = _Producer.Get();
+					}
+					catch
+					{
+						Thread.Sleep(_consumerSleepNum * 2);
+						continue;
+					}
+					if (data == null || data.Length == 0)
+					{
+						Thread.Sleep(_consumerSleepNum * 2);
+						continue;
+					}
+
+					data = data.ToLower();
+					var words = data.Split(' ').ToList();
+
+					foreach (var word in words)
+					{
+						try
+						{
+							if(_englishList.ContainsKey(word))
+								_wordFound.Add(_englishList[word]);
+						}
+						catch{}
+					}
+
+					Thread.Sleep(_consumerSleepNum);
 				}
-				var wordsHashed = data.Split(' ').ToHashSet().ToList();
-
-				Parallel.For(0, wordsHashed.Count, i => {
-					_wordFound.Add(_englishList[wordsHashed[i]]);
-				});
-
-				Thread.Sleep(_consumerSleepNum);
+				catch(Exception exception)
+				{
+					var e = exception;
+					Thread.Sleep(_consumerSleepNum * 2);
+				}
 			}
 		}
 	}
