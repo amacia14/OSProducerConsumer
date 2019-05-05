@@ -203,7 +203,7 @@ namespace ConsumerMonitor
 				lvThreads.Items.Add(listItem);
 			}
 
-			foreach(var item in _ThreadManager.GetRunningThreads())
+			foreach(var item in _ThreadManager.GetDeadThreads())
 			{
 				ListViewItem listItem = new ListViewItem(item.Item1.Name);
 				listItem.SubItems.Add(Enum.GetName(typeof(ThreadState), item.Item1.ThreadState));
@@ -222,7 +222,6 @@ namespace ConsumerMonitor
 			lblThreads.Text = "Number of threads: " + settings.NumOfProducers;
 			lblBufferSize.Text = "Buffer Size: " + settings.BufferSize;
 			lblBufferCount.Text = "Buffer Count: " + bufferItems.Count;
-
 		}
 
 		private void cmdreset_Click(object sender, EventArgs e)

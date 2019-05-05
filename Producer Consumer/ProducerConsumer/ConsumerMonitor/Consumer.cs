@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Permissions;
@@ -33,7 +34,7 @@ namespace ConsumerMonitor
 		private WorkerClient _Producer { get; set; }
 		private List<string> _wordFound { get; }
 		private object locker = new object();
-		private List<string> _englishList { get; set; }
+		private string _englishList { get; set; }
 		public string Sentence
 		{
 			get
@@ -62,10 +63,8 @@ namespace ConsumerMonitor
 		{
 			var directory = System.IO.Directory.GetCurrentDirectory() + "\\";
 			var file = File.OpenText(directory + url).ReadToEnd().ToLower();
-			var words = file.Split('\n').ToList();
-			words.Sort();
-			
-			_englishList = new List<string>(words);
+
+			_englishList = file;
 		}
 
 		public void Consume()
@@ -98,8 +97,8 @@ namespace ConsumerMonitor
 					{
 						try
 						{
-							var item = _englishList.Where(s => String.Equals(s, word)).ToList();
-							if(item.Count == 1)
+							var yes = _englishList.Contains("\n" + word + "\n");
+							if (yes && word.Length > 3)
 								_wordFound.Add(word);
 						}
 						catch{}

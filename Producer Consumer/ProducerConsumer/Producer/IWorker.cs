@@ -34,5 +34,6 @@ namespace Producer
 
 		[OperationContract]
 		Settings CurrentSettings();
+		
 	}
 }

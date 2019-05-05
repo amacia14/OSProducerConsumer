@@ -129,17 +129,6 @@ namespace Producer
 		{
 			_worker._buffer.switching = true;
 
-			foreach (string item in _worker._buffer.ToArray())
-			{
-				try
-				{
-					File.Delete(item);
-				}
-				catch
-				{
-				}
-			}
-
 			for (int i = 0; i < _threadManager.CurrentCount; i++)
 			{
 				_threadManager.KillThread();
@@ -151,6 +140,22 @@ namespace Producer
 
 
 			_worker._buffer = null;
+
+			var path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+			var files = Directory.EnumerateFiles(Path.Combine(path, "ConsumerProducerFiles"));
+
+			foreach (var file in files)
+			{
+				try
+				{
+					File.Delete(file);
+				}
+				catch
+				{
+				}
+			}
+
 		}
 
 		public bool Test()
@@ -167,5 +172,6 @@ namespace Producer
 		{
 			return _worker._settings;
 		}
+		
 	}
 }

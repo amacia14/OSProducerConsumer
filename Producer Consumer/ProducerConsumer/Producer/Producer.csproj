@@ -71,6 +71,7 @@
     <Compile Include="ConcurrentBuffer.cs" />
     <Compile Include="ConcurrentCircularBuffer.cs" />
     <Compile Include="IWorker.cs" />
+    <Compile Include="List.cs" />
     <Compile Include="ProducerWorker.cs" />
     <Compile Include="Producer%28NotUsed%29.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

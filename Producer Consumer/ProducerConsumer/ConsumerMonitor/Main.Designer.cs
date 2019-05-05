@@ -32,6 +32,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tpSettings = new System.Windows.Forms.TabPage();
+			this.cmdreset = new System.Windows.Forms.Button();
 			this.cmdSendSettings = new System.Windows.Forms.Button();
 			this.cmdTestConnection = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -49,7 +50,6 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.tpResults = new System.Windows.Forms.TabPage();
-			this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.lvThreads = new System.Windows.Forms.ListView();
 			this.colThreadName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colActive = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -63,8 +63,8 @@
 			this.cmdProducerFetch = new System.Windows.Forms.Button();
 			this.bkWorker = new System.ComponentModel.BackgroundWorker();
 			this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.consumerBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.cmdreset = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tpSettings.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -76,10 +76,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.nProducers)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nClients)).BeginInit();
 			this.tpResults.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
 			this.tbProducer.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.consumerBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -109,6 +109,16 @@
 			this.tpSettings.TabIndex = 0;
 			this.tpSettings.Text = "Initialize";
 			this.tpSettings.UseVisualStyleBackColor = true;
+			// 
+			// cmdreset
+			// 
+			this.cmdreset.Location = new System.Drawing.Point(116, 313);
+			this.cmdreset.Name = "cmdreset";
+			this.cmdreset.Size = new System.Drawing.Size(75, 23);
+			this.cmdreset.TabIndex = 10;
+			this.cmdreset.Text = "Reset";
+			this.cmdreset.UseVisualStyleBackColor = true;
+			this.cmdreset.Click += new System.EventHandler(this.cmdreset_Click);
 			// 
 			// cmdSendSettings
 			// 
@@ -288,10 +298,6 @@
 			this.tpResults.Text = "Results";
 			this.tpResults.UseVisualStyleBackColor = true;
 			// 
-			// mainBindingSource
-			// 
-			this.mainBindingSource.DataSource = typeof(ConsumerMonitor.Main);
-			// 
 			// lvThreads
 			// 
 			this.lvThreads.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -349,9 +355,10 @@
 			this.groupBox3.Controls.Add(this.lblBufferCount);
 			this.groupBox3.Controls.Add(this.lblBufferSize);
 			this.groupBox3.Controls.Add(this.lblThreads);
-			this.groupBox3.Location = new System.Drawing.Point(8, 42);
+			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox3.Location = new System.Drawing.Point(3, 26);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(306, 218);
+			this.groupBox3.Size = new System.Drawing.Size(330, 86);
 			this.groupBox3.TabIndex = 4;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Producer\'s resources";
@@ -402,19 +409,13 @@
 			// 
 			this.settingsBindingSource.DataSource = typeof(Common.Settings);
 			// 
+			// mainBindingSource
+			// 
+			this.mainBindingSource.DataSource = typeof(ConsumerMonitor.Main);
+			// 
 			// consumerBindingSource
 			// 
 			this.consumerBindingSource.DataSource = typeof(ConsumerMonitor.Consumer);
-			// 
-			// cmdreset
-			// 
-			this.cmdreset.Location = new System.Drawing.Point(116, 313);
-			this.cmdreset.Name = "cmdreset";
-			this.cmdreset.Size = new System.Drawing.Size(75, 23);
-			this.cmdreset.TabIndex = 10;
-			this.cmdreset.Text = "Reset";
-			this.cmdreset.UseVisualStyleBackColor = true;
-			this.cmdreset.Click += new System.EventHandler(this.cmdreset_Click);
 			// 
 			// Main
 			// 
@@ -440,11 +441,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.nProducers)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nClients)).EndInit();
 			this.tpResults.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
 			this.tbProducer.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.consumerBindingSource)).EndInit();
 			this.ResumeLayout(false);
 
