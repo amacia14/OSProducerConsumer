@@ -34,7 +34,6 @@ namespace ProducerWCF
 			return worker.Get();
 		}
 		
-
 		public HttpStatusCode Post(Settings newSettings)
 		{
 			return worker.Post(newSettings);

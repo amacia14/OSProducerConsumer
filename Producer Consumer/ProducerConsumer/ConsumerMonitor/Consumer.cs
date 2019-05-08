@@ -31,9 +31,14 @@ namespace ConsumerMonitor
 			}
 		}
 
+		/// <summary>
+		/// A connection to producer server
+		/// </summary>
 		private WorkerClient _Producer { get; set; }
+		/// <summary>
+		/// All words found
+		/// </summary>
 		private List<string> _wordFound { get; }
-		private object locker = new object();
 		private string _englishList { get; set; }
 		public string Sentence
 		{
@@ -48,8 +53,7 @@ namespace ConsumerMonitor
 				return writer.ToString();
 			}
 		}
-
-
+		private object locker = new object();
 
 		public Consumer(int consumerSleepNum, WorkerClient connection)
 		{
@@ -59,6 +63,10 @@ namespace ConsumerMonitor
 			Stop = false;
 		}
 
+		/// <summary>
+		/// Grab the english dictioonary
+		/// </summary>
+		/// <param name="url"></param>
 		private void GetEnglish(string url)
 		{
 			var directory = System.IO.Directory.GetCurrentDirectory() + "\\";
@@ -67,6 +75,9 @@ namespace ConsumerMonitor
 			_englishList = file;
 		}
 
+		/// <summary>
+		/// Entry point of where the thread will start.
+		/// </summary>
 		public void Consume()
 		{
 			GetEnglish("words.txt");
@@ -84,6 +95,7 @@ namespace ConsumerMonitor
 						Thread.Sleep(_consumerSleepNum * 2);
 						continue;
 					}
+
 					if (data == null || data.Length == 0 || data.Equals(""))
 					{
 						Thread.Sleep(_consumerSleepNum * 2);
@@ -93,6 +105,7 @@ namespace ConsumerMonitor
 					data = data.ToLower();
 					var words = data.Split(' ').Where(x => x.Length > 0).Where(x => !String.Equals(x, "")).ToList();
 					
+					//Find word based on what producer made.
 					foreach (var word in words)
 					{
 						try

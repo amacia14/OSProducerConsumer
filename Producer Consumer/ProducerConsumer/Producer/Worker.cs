@@ -72,7 +72,6 @@ namespace Producer
 
 			lock (_worker.locker)
 			{
-
 				if (_worker._buffer == null)
 					_worker._buffer = new ConcurrentBuffer(newSettings.BufferSize);
 
@@ -87,7 +86,6 @@ namespace Producer
 					{
 						buffer.TryAdd(item);
 					}
-
 					_worker._buffer = buffer;
 					Parallel.ForEach(_worker._threadManager.GetRunningThreads(), (tuple) => { tuple.Item2._buffer = _worker._buffer; });
 				}
@@ -118,10 +116,8 @@ namespace Producer
 					var tuple = _worker._threadManager.GetRunningThreads()[0];
 					_worker._threadManager.KillThread();
 				}
-
 				_worker._settings = newSettings;
 			}
-
 			return HttpStatusCode.OK;
 		}
 
@@ -138,7 +134,6 @@ namespace Producer
 
 			_worker._settings = null;
 
-
 			_worker._buffer = null;
 
 			var path = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -151,11 +146,8 @@ namespace Producer
 				{
 					File.Delete(file);
 				}
-				catch
-				{
-				}
+				catch {}
 			}
-
 		}
 
 		public bool Test()

@@ -33,6 +33,9 @@ namespace ConsumerMonitor
 			sendSettings();
 		}
 
+		/// <summary>
+		/// Validate settings and sends it to server.
+		/// </summary>
 		private void sendSettings()
 		{
 			//Check settings if valid
@@ -56,11 +59,14 @@ namespace ConsumerMonitor
 			try
 			{
 				_Client = new WorkerClient();
+				//Send Settings
 				var result = _Client.Post(newSettings);
 				if (result == HttpStatusCode.OK)
 				{
 					tpSettings.Name = "Settings";
 					_settings = newSettings;
+					
+					//Apply settings on Consumer Monitor end.
 					bkWorker.RunWorkerAsync();
 					MessageBox.Show("Setting posted successfully");
 				}
@@ -71,32 +77,8 @@ namespace ConsumerMonitor
 			{
 				MessageBox.Show("Setting not successful for some reason.  Probably Service is not active");
 			}
-			////Check http connection
-			//if (_httpConnection == null)
-			//{
-			//	if (!test(txtbxBaseUrl.Text, Convert.ToInt32(nPort.Value)))
-			//	{
-			//		MessageBox.Show("Server not found");
-			//		return;
-			//	}
-			//}
-
-			//var result = _httpConnection.Post(newSettings);
-			//if (result == HttpStatusCode.OK)
-			//{
-			//	MessageBox.Show("Setting posted successfully");
-
-			//	tpSettings.Name = "Settings";
-			//	_settings = newSettings;
-			//	bkWorker.RunWorkerAsync();
-			//}
-			//else
-			//	MessageBox.Show("Setting NOT successful.");
 		}
 		#endregion
-
-
-
 		#region Test Connection
 		private void cmdTestConnection_Click(object sender, EventArgs e)
 		{
@@ -114,41 +96,7 @@ namespace ConsumerMonitor
 			{
 				MessageBox.Show("Service not found");
 			}
-
-			#region  deadcode
-
-			//var test = this.test(txtbxBaseUrl.Text, Convert.ToInt32(nPort.Value));
-			//if (test)
-			//	MessageBox.Show("Found correct server");
-			//else
-			//{
-			//	MessageBox.Show("Incorrect server");
-			//	_httpConnection = null;
-			//}
-
-			#endregion
-
 		}
-
-		#region deadCode
-		//private bool test(string url, int port)
-		//{
-		//	_httpConnection = new Http(url, port);
-
-		//	if (_httpConnection.TestConnection())
-		//		return true;
-		//	else
-		//		return false;
-		//}
-		//private bool testWithCurrent()
-		//{
-		//	if (_httpConnection.TestConnection())
-		//		return true;
-		//	else
-		//		return false;
-		//}
-		#endregion
-
 		#endregion
 
 		private void bkWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -156,6 +104,9 @@ namespace ConsumerMonitor
 			CheckSettings();
 		}
 
+		/// <summary>
+		/// Apply new settings
+		/// </summary>
 		private void CheckSettings()
 		{
 			//Number of Clients
@@ -226,6 +177,8 @@ namespace ConsumerMonitor
 
 		private void cmdreset_Click(object sender, EventArgs e)
 		{
+			if(_Client == null)
+				_Client = new WorkerClient();
 			_Client.Reset();
 		}
 	}

@@ -9,7 +9,14 @@ namespace Common
 {
 	public class ThreadManager<T>
 	{
+		/// <summary>
+		/// Threads that are currently running
+		/// </summary>
 		public List<Tuple<Thread, T>> _threads { get; set; }
+
+		/// <summary>
+		/// Threads that are currently dead.
+		/// </summary>
 		public List<Tuple<Thread, T>> _oldThreads { get; set; }
 
 		public ThreadManager()
